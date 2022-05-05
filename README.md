@@ -23,7 +23,29 @@ To run the demo:
 
     ./start.sh
 
-# Other ideas/todo
+Then to view, access the local server display by flask:
+
+    * Running on http://127.0.0.1:5000 (Press CTRL+C to quit)
+
+    http://127.0.0.1:5000/
+
+# Developing on this demo itself
+Right now the development cycle is:
+
+- Make change
+- Kill server with Ctrl-C
+- Rebuild and restart with `./build.sh && ./start.sh`
+
+## Todo
+- Get OpenSSL server running as part of `start.sh`
+- Get a TLS echo happening in demo
+- Fix jank of 404 should redirect to homepage
+- Eliminate need for end user to have .NET SDK
+
+## Questions
+- Spec doc says flask backend should start MCP and OpenSSL server, can we use `start.sh` instead? just seems cleaner IMO
+- If API and MCP are both python, why are we doing protobuf instead of just native calls to a public interface of MCP?
+
 ## Toolchain automation
 
     wget https://dot.net/v1/dotnet-install.sh
