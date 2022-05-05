@@ -1,0 +1,25 @@
+﻿@page "/apitest"
+
+@using System.Net.Http
+@using System.Net.Http.Json
+
+@inject HttpClient Http
+
+<PageTitle>Flask API Test</PageTitle>
+
+<h1>Flask API Test</h1>
+
+<p role="status">Time: @time</p>
+
+<button class="btn btn-primary" @onclick="UpdateTime">Fetch time from flask</button>
+
+@code {
+    private string time = "~~~";
+
+    private async Task UpdateTime()
+    {
+        //var ts = new TimeStampResponse();
+        var ts = await Http.GetFromJsonAsync<TimeStampResponse>("api/timestamp");
+        time = ts.time;
+    }
+}
