@@ -39,12 +39,10 @@ Right now the development cycle is:
 ## Todo
 - Get OpenSSL server running as part of `start.sh`
 - Get a TLS echo happening in demo
-- Fix jank of 404 should redirect to homepage
 - Eliminate need for end user to have .NET SDK
 
 ## Questions
-- Spec doc says flask backend should start MCP and OpenSSL server, can we use `start.sh` instead? just seems cleaner IMO
-- If API and MCP are both python, why are we doing protobuf instead of just native calls to a public interface of MCP?
+
 
 ## Toolchain automation
 
