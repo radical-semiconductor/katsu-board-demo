@@ -37,9 +37,14 @@ Right now the development cycle is:
 - Rebuild and restart with `./build.sh && ./start.sh`
 
 ## Todo
-- Get OpenSSL server running as part of `start.sh`
+- Make sure server ends when python exits
 - Get a TLS echo happening in demo
 - Eliminate need for end user to have .NET SDK
+- PIPENV_VENV_IN_PROJECT - add ability to debug out python environ
+- configure vscode to also use the right linting/venv when editing
+- add launchpoints (build, test, start to vscode)
+- finish tests for opensslserver
+- implement keys
 
 ## Questions
 
