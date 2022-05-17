@@ -1,2 +1,4 @@
 frontend/bin
 frontend/obj
+*.crt
+*.key
