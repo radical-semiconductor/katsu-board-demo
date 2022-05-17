@@ -23,6 +23,10 @@ To run the demo:
 
     ./start.sh
 
+To run unit tests run:
+
+    ./test.sh
+
 Then to view, access the local server display by flask:
 
     * Running on http://127.0.0.1:5000 (Press CTRL+C to quit)
