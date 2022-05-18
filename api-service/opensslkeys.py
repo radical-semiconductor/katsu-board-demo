@@ -23,3 +23,11 @@ def ensure_generated():
 def purge():
     os.remove(KEY_PATH)
     os.remove(CRT_PATH)
+
+def list_keys():
+    keys = []
+    if KEY_PATH.exists:
+        keys.append(KEY_PATH.name)
+    if CRT_PATH.exists:
+        keys.append(CRT_PATH.name)
+    return keys

@@ -11,3 +11,11 @@ def test_can_purge_keys():
     opensslkeys.purge()
     assert not opensslkeys.KEY_PATH.exists()
     assert not opensslkeys.CRT_PATH.exists()
+
+def test_can_list_keys():
+    opensslkeys.ensure_generated()
+    keys = opensslkeys.list_keys()
+    assert keys == [
+        'radical.key',
+        'radical.crt',
+        ]
