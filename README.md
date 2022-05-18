@@ -49,6 +49,7 @@ Right now the development cycle is:
 - add launchpoints (build, test, start to vscode)
 - finish tests for opensslserver
 - implement keys
+- C# extensions for vscode configure
 
 ## Questions
 
