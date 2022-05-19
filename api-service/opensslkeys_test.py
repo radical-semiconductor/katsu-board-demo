@@ -19,3 +19,9 @@ def test_can_list_keys():
         'radical.key',
         'radical.crt',
         ]
+
+def test_can_list_no_keys():
+    opensslkeys.purge()
+    keys = opensslkeys.list_keys()
+    assert keys == [
+        ]

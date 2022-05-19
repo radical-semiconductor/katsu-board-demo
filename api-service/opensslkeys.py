@@ -26,8 +26,8 @@ def purge():
 
 def list_keys():
     keys = []
-    if KEY_PATH.exists:
+    if KEY_PATH.exists():
         keys.append(KEY_PATH.name)
-    if CRT_PATH.exists:
+    if CRT_PATH.exists():
         keys.append(CRT_PATH.name)
     return keys
