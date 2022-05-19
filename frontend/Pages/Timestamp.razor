@@ -1,7 +1,4 @@
-﻿@page "/apitest"
-
-@using System.Net.Http
-@using System.Net.Http.Json
+﻿@page "/time"
 
 @inject HttpClient Http
 
@@ -19,6 +16,7 @@
     private async Task UpdateTime()
     {
         var ts = await Http.GetFromJsonAsync<TimeStampResponse>("api/timestamp");
-        time = ts.time;
+        if (ts is not null)
+            time = ts.time;
     }
 }
