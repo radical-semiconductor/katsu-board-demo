@@ -1,0 +1,26 @@
+﻿@inject HttpClient http
+
+<MudPaper Width="14rem" Class="my-5">
+    <MudList Clickable="false">
+        @foreach (var key in keys)
+        {
+            <MudListItem Text="@key" Icon="@Icons.Filled.Key" />
+        }
+    </MudList>
+</MudPaper>
+
+@code {
+    private List<string> keys = new() {};
+
+    protected override async Task OnInitializedAsync()
+    {
+        while (true)
+        {
+            var keys_list_response = await http.GetFromJsonAsync<KeysListResponse>("api/keys/list");
+            if (keys_list_response is not null)
+                keys = keys_list_response.keys;
+            StateHasChanged();
+            await Task.Delay(2000);
+        }
+    }
+}
