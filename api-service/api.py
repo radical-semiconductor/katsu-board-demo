@@ -15,10 +15,12 @@ def time():
 @app.route('/api/keys/generate')
 def keys_generate():
     opensslkeys.ensure_generated()
+    return jsonify({'success': True})
 
 @app.route('/api/keys/purge')
 def keys_purge():
     opensslkeys.purge()
+    return jsonify({'success': True})
 
 @app.route('/api/keys/list')
 def keys_list():
@@ -29,7 +31,9 @@ _server = OpenSslServer()
 @app.route('/api/server/start')
 def server_start():
     _server.ensure_started()
+    return jsonify({'success': True})
 
 @app.route('/api/server/stop')
 def server_stop():
     _server.stop()
+    return jsonify({'success': True})
