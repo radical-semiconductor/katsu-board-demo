@@ -1,3 +1,4 @@
+set -e
 pushd ./frontend
     dotnet publish
 popd
