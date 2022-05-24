@@ -1,0 +1,34 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "runDevelopment",
+            "runOptions": {
+                "runOn": "folderOpen"
+            },
+            "dependsOrder": "parallel",
+            "dependsOn": [
+                "api-service",
+                "frontend"
+            ]
+        },
+        {
+            "label": "api-service",
+            "type": "shell",
+            "command": "./develop.api-service.sh",
+            "presentation": {
+                "panel": "dedicated",
+                "group": "develop"
+            }
+        },
+        {
+            "label": "frontend",
+            "type": "shell",
+            "command": "./develop.frontend.sh",
+            "presentation": {
+                "panel": "dedicated",
+                "group": "develop"
+            }
+        }
+    ]
+}
