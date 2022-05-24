@@ -1,24 +1,17 @@
 ﻿@inject HttpClient http
 
-<MudButton Disabled="@_processing" OnClick="GenerateKeys" Variant="Variant.Filled" Color="Color.Primary">
-    @if (_processing)
-    {
-        <MudProgressCircular Size="Size.Small" Indeterminate="true"/>
-    }
-    else
-    {
-        <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.AddCircle" Title="Add" />
-    }
+<MudButton Disabled="@_processing_generatekeys" OnClick="GenerateKeys" Variant="Variant.Filled" Color="Color.Primary">
+    <MudIcon Size="Size.Small" Class="mr-1 ms-n2" Icon="@Icons.Material.Filled.AddCircle" Title="Add" />
     <MudText>Generate Keys</MudText>
 </MudButton>
 
 @code {
-    private bool _processing = false;
+    private bool _processing_generatekeys = false;
 
     private async Task GenerateKeys()
     {
-        _processing = true;
+        _processing_generatekeys = true;
         await http.GetAsync("/api/keys/generate");
-        _processing = false;
+        _processing_generatekeys = false;
     }
 }

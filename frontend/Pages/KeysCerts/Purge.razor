@@ -1,24 +1,17 @@
 ﻿@inject HttpClient http
 
-<MudButton Disabled="@_processing" OnClick="PurgeKeys" Variant="Variant.Filled" Color="Color.Secondary">
-    @if (_processing)
-    {
-        <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true"/>
-    }
-    else
-    {
-        <MudIcon Class="ms-n1" Size="Size.Small" Icon="@Icons.Material.Filled.DeleteForever" Title="Delete" />
-    }
+<MudButton Disabled="@_processing_purgekeys" OnClick="PurgeKeys" Variant="Variant.Filled" Color="Color.Secondary">
+    <MudIcon Size="Size.Small" Class="mr-1 ms-n2" Icon="@Icons.Material.Filled.DeleteForever" Title="Delete" />
     <MudText>Purge All Keys</MudText>
 </MudButton>
 
 @code {
-    private bool _processing = false;
+    private bool _processing_purgekeys = false;
 
     private async Task PurgeKeys()
     {
-        _processing = true;
+        _processing_purgekeys = true;
         await http.GetAsync("/api/keys/purge");
-        _processing = false;
+        _processing_purgekeys = false;
     }
 }
