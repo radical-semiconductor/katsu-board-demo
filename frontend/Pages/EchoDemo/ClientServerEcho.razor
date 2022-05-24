@@ -1,0 +1,12 @@
+﻿@inject HttpClient http
+
+<MudStack Class="pt-6" Row="true">
+    <MudTextField T="string" Label="Client" Variant="Variant.Outlined" Text="@sampleText" Lines="20" />
+    <MudTextField T="string" Label="Server" Variant="Variant.Outlined" Text="@sampleText2" Lines="20" />
+</MudStack>
+
+@code
+{
+    string sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ornare laoreet magna at ultrices. Morbi tincidunt, neque ut feugiat dapibus, ligula ipsum luctus dolor, et porttitor lacus mi ut libero. Aenean mollis sapien vel congue placerat. Vestibulum sit amet enim congue, sollicitudin lacus vitae, consectetur turpis. Praesent eleifend molestie turpis non scelerisque. Integer vel felis vitae arcu pulvinar rutrum et id est. Etiam mollis imperdiet neque a scelerisque. Maecenas condimentum libero ut augue suscipit iaculis. Cras lacinia ex efficitur nunc iaculis bibendum. Praesent massa ex, suscipit id sapien eget, sagittis tempor orci. Nulla malesuada sit amet lectus scelerisque fermentum. Praesent condimentum tellus quis ornare pulvinar.";
+    string sampleText2 = "Maecenas consectetur quis ipsum nec iaculis. Proin in ipsum rhoncus, consequat arcu sit amet, semper elit. Ut lacinia eros tincidunt ex sollicitudin, quis fringilla augue convallis. Donec laoreet, ex sed dapibus condimentum, quam orci pulvinar tellus, sagittis molestie lectus sapien non nulla. Duis vitae sem non leo convallis ullamcorper. Donec sed condimentum orci, a elementum purus. Nullam at lacus tincidunt nisl tempus vulputate vitae a diam. Ut tempor urna et mauris efficitur pretium. Quisque vitae aliquet diam, eget ultrices ex. Mauris placerat eleifend scelerisque. Aenean ut nisl pretium, tempus dolor quis, sagittis risus. Proin fermentum purus ut accumsan accumsan. Donec aliquam ante at eros porttitor vehicula. Nam ac magna ut lacus vulputate blandit. Praesent placerat vel orci iaculis consequat. In varius ut felis at pretium.";
+}

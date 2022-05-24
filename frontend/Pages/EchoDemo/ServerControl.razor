@@ -1,0 +1,47 @@
+﻿@inject HttpClient http
+@inject ConfigReader config
+
+<MudButton Disabled="@_processing_toggleserver" OnClick="ToggleServer" Variant="Variant.Filled" Color="Color.Primary">
+    <MudIcon Size="Size.Small" Class="mr-1 ms-n2" Icon="@Icons.Material.Filled.AddCircle" Title="Add" />
+    @if (_running)
+    {
+        <MudText>Stop Server</MudText>
+    }
+    else
+    {
+        <MudText>Start Server</MudText>
+    }
+
+</MudButton>
+
+@code {
+    private bool _running = false;
+
+    private bool _processing_toggleserver = false;
+    private async Task ToggleServer()
+    {
+        _processing_toggleserver= true;
+        if (_running)
+            await http.GetAsync("/api/server/stop");
+        else
+            await http.GetAsync("/api/server/start");
+
+        _processing_toggleserver = false;
+    }
+
+    private async Task UpdateServerStatus()
+    {
+        var server_status = await http.GetFromJsonAsync<ServerStatusResponse>("api/server/status");
+        if (server_status is not null)
+            _running = server_status.running;
+        StateHasChanged();
+        await Task.Delay(config.PollRateMilliSeconds);
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        while (true)
+        {
+            await UpdateServerStatus();
+        }
+    }
+}
