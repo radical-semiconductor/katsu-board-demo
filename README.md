@@ -34,21 +34,20 @@ Then to view, access the local server display by flask:
     http://127.0.0.1:5000/
 
 # Developing on this demo itself
-Right now the development cycle is:
+To utilize live reloading upon save either:
+- Use the VS Code Task `runDevelopment`
+- Or run each in separt terminals `develop.api-service.sh` followed by `develop.frontend.sh`
 
-- Make change
-- Kill server with Ctrl-C
-- Rebuild and restart with `./build.sh && ./start.sh`
+Otherwise you can manually rerun everything from scratch
+1. Make change
+1. Kill server with Ctrl-C
+1. Rebuild and restart with `./build.sh && ./start.sh`
 
 ## Todo
-- Make sure server ends when python exits
 - Get a TLS echo happening in demo
 - Eliminate need for end user to have .NET SDK
 - PIPENV_VENV_IN_PROJECT - add ability to debug out python environ
 - configure vscode to also use the right linting/venv when editing
-- add launchpoints (build, test, start to vscode)
-- finish tests for opensslserver
-- implement keys
 - C# extensions for vscode configure
 
 ## Questions
