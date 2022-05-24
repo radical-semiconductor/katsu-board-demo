@@ -1,4 +1,5 @@
-﻿@inject HttpClient http
+@inject HttpClient http
+@inject ConfigReader config
 
 <MudPaper Width="14rem" Class="my-5">
     <MudList Clickable="false">
@@ -20,7 +21,7 @@
             if (keys_list_response is not null)
                 keys = keys_list_response.keys;
             StateHasChanged();
-            await Task.Delay(2000);
+            await Task.Delay(config.PollRateMilliSeconds);
         }
     }
 }
