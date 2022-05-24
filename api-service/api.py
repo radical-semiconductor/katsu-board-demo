@@ -43,3 +43,9 @@ def server_start():
 def server_stop():
     _server.stop()
     return jsonify({'success': True})
+
+@app.route('/api/server/status')
+def server_status():
+    return jsonify(
+        running=_server.running(),
+    )

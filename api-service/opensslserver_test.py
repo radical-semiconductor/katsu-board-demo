@@ -49,3 +49,8 @@ def test_ensure_started_restarts_if_previously_running_crashes(server):
     assert not openssl_s_server_running()
     server.ensure_started()
     assert openssl_s_server_running()
+
+def test_can_report_status(server):
+    assert openssl_s_server_running() == server.running()
+    server.ensure_started()
+    assert openssl_s_server_running() == server.running()
