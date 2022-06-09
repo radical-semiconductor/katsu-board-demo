@@ -2,7 +2,6 @@ import pytest
 
 import opensslkeys
 from opensslserver import OpenSslServer
-from test_helpers import process_is_running
 
 
 @pytest.fixture
