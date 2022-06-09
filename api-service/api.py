@@ -36,8 +36,11 @@ def keys_list():
 _server = OpenSslServer()
 @app.route('/api/server/start')
 def server_start():
-    _server.ensure_started()
-    return jsonify({'success': True})
+    try:
+        _server.ensure_started()
+        return jsonify({'success': True})
+    except:
+        return jsonify({'success': False})
 
 @app.route('/api/server/stop')
 def server_stop():
