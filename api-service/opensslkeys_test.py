@@ -12,6 +12,10 @@ def test_can_purge_keys():
     assert not opensslkeys.KEY_PATH.exists()
     assert not opensslkeys.CRT_PATH.exists()
 
+def test_can_purge_is_idempotent():
+    opensslkeys.purge()
+    opensslkeys.purge()
+
 def test_can_list_keys():
     opensslkeys.ensure_generated()
     keys = opensslkeys.list_keys()

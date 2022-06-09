@@ -21,8 +21,11 @@ def ensure_generated():
         ])
 
 def purge():
-    os.remove(KEY_PATH)
-    os.remove(CRT_PATH)
+    for p in [KEY_PATH, CRT_PATH]:
+        try:
+            os.remove(p)
+        except FileNotFoundError:
+            pass
 
 def list_keys():
     keys = []
