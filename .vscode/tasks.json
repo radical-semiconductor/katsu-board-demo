@@ -10,7 +10,8 @@
             "dependsOn": [
                 "api-service",
                 "frontend"
-            ]
+            ],
+            "problemMatcher": []
         },
         {
             "label": "api-service",
