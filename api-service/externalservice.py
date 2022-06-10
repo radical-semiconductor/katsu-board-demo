@@ -1,7 +1,7 @@
 import atexit
 import subprocess
 
-from psutil import TimeoutExpired
+import psutil
 
 
 class ExternalService:
@@ -54,10 +54,14 @@ class ExternalService:
             self._process = None
             return
 
-        self._process.terminate()
-        try:
-            # wait for upto 5 seconds for graceful shutdown
-            self._process.wait(5)
-        except subprocess.TimeoutExpired:
-            self._process.kill()
+        parent = psutil.Process(self.pid)
+        children = [c for c in parent.children(recursive=True)]
+        for p in children + [parent]:
+            p.terminate()
+            try:
+                # wait for upto 5 seconds for graceful shutdown
+                p.wait(5)
+            except psutil.TimeoutExpired:
+                p.kill()
+
         self._process = None
