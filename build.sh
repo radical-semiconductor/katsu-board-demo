@@ -6,6 +6,6 @@ pushd ./frontend
 popd
 
 pushd ./api-service
-    pipenv install
+    pipenv sync
     pipenv graph
 popd
