@@ -5,11 +5,11 @@
     <MudIcon Size="Size.Small" Class="mr-1 ms-n2" Icon="@Icons.Material.Filled.AddCircle" Title="Add" />
     @if (_running)
     {
-        <MudText>Stop Server</MudText>
+        <MudText>Stop MCP</MudText>
     }
     else
     {
-        <MudText>Start Server</MudText>
+        <MudText>Start MCP</MudText>
     }
 
 </MudButton>
@@ -22,16 +22,16 @@
     {
         _processing_toggleserver= true;
         if (_running)
-            await http.GetAsync("/api/server/stop");
+            await http.GetAsync("/api/mcp/stop");
         else
-            await http.GetAsync("/api/server/start");
+            await http.GetAsync("/api/mcp/start");
 
         _processing_toggleserver = false;
     }
 
     private async Task UpdateServerStatus()
     {
-        var server_status = await http.GetFromJsonAsync<ServiceStatusResponse>("api/server/status");
+        var server_status = await http.GetFromJsonAsync<ServiceStatusResponse>("api/mcp/status");
         if (server_status is not null)
             _running = server_status.running;
         StateHasChanged();

@@ -1,0 +1,24 @@
+﻿@inject HttpClient http
+@inject ConfigReader config
+
+<MudPaper class="ma-7 pa-4" Width="30em">
+    <MudButton OnClick="RunDiag" Variant="Variant.Filled" Color="Color.Primary">
+        Run Diagnostic 9
+    </MudButton>
+    <MudText>
+        Result: @_message
+    </MudText>
+</MudPaper>
+@code {
+    private string _message = "~";
+
+
+    private async Task RunDiag()
+    {
+        var diag_result = await http.GetFromJsonAsync<McpDiagResponse>("api/mcp/diagnostic");
+        if (diag_result is not null)
+            _message = diag_result.message;
+        StateHasChanged();
+        await Task.Delay(config.PollRateMilliSeconds);
+    }
+}
