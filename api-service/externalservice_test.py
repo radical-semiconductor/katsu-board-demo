@@ -9,6 +9,10 @@ class DummyYesService(ExternalService):
     def cmd(self):
         return ['yes', 'radical']
 
+    @property
+    def expected_startup_time(self):
+        return 0.001
+
 @pytest.fixture
 def service():
     s = DummyYesService()

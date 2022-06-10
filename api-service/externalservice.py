@@ -16,6 +16,10 @@ class ExternalService:
         raise NotImplementedError
 
     @property
+    def expected_startup_time(self):
+        raise NotImplementedError
+
+    @property
     def pid(self):
         if self._process is None:
             return None
@@ -36,9 +40,7 @@ class ExternalService:
         self._process = subprocess.Popen(self.cmd)
         try:
             # see if external service stays started
-            # OpenSSL with missing keys took ~.001 on dev machine.
-            # Giving order of magnitude margin.
-            self._process.wait(.01)
+            self._process.wait(self.expected_startup_time)
             raise RuntimeError(f"Failed to start `{' '.join(self.cmd)}`")
         except subprocess.TimeoutExpired:
             return
