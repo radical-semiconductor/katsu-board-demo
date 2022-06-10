@@ -49,6 +49,7 @@ Otherwise you can manually rerun everything from scratch
 - PIPENV_VENV_IN_PROJECT - add ability to debug out python environ
 - configure vscode to also use the right linting/venv when editing
 - C# extensions for vscode configure
+- possibly add "sensor" for startup detection rather than just waiting for full startup time
 
 ## Questions
 
