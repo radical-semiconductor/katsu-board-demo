@@ -4,6 +4,7 @@ from flask import jsonify
 
 import opensslkeys
 from app import app
+from mcpservice import MCPService
 from opensslserver import OpenSslServer
 
 
@@ -52,3 +53,27 @@ def server_status():
     return jsonify(
         running=_server.running(),
     )
+
+_mcp = MCPService()
+@app.route('/api/mcp/start')
+def mcp_start():
+    try:
+        _mcp.ensure_started()
+        return jsonify(success=True)
+    except:
+        return jsonify(success=False)
+
+@app.route('/api/mcp/stop')
+def mcp_stop():
+    _mcp.stop()
+    return jsonify(success=True)
+
+@app.route('/api/mcp/status')
+def mcp_status():
+    return jsonify(
+        running=_mcp.running(),
+    )
+
+@app.route('/api/mcp/diagnostic')
+def mcp_diagnostic():
+    return jsonify(message=_mcp.do_diagnostic(9))
