@@ -34,7 +34,8 @@ def keys_list():
     keys = opensslkeys.list_keys()
     return jsonify(keys=keys)
 
-_server = OpenSslServer()
+ECHO_DEMO_PORT=9898
+_server = OpenSslServer(ECHO_DEMO_PORT)
 @app.route('/api/server/start')
 def server_start():
     try:

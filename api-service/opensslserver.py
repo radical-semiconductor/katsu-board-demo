@@ -2,6 +2,10 @@ from externalservice import ExternalService
 
 
 class OpenSslServer(ExternalService):
+    def __init__(self, port):
+        super().__init__()
+        self.port = port
+
     @property
     def cmd(self):
         return [
@@ -9,7 +13,7 @@ class OpenSslServer(ExternalService):
             's_server',
             '-cert=../radical.crt',
             '-key=../radical.key',
-            '-accept=8888',
+            f'-accept={self.port}',
             ]
 
     @property

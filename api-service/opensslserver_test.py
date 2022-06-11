@@ -8,7 +8,7 @@ from test_helpers import process_is_running
 @pytest.fixture(scope='session')
 def openssl_server():
     opensslkeys.ensure_generated()
-    s = OpenSslServer()
+    s = OpenSslServer(5555)
     yield s
     s.stop()
 
@@ -19,4 +19,4 @@ def test_server_can_start(openssl_server:OpenSslServer):
 def test_server_cant_start_without_keys():
     opensslkeys.purge()
     with pytest.raises(RuntimeError, match="Failed to start `openssl"):
-        OpenSslServer().ensure_started()
+        OpenSslServer(5555).ensure_started()
