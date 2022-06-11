@@ -55,6 +55,26 @@ def server_status():
         running=_server.running(),
     )
 
+_client = OpenSslClient(ECHO_DEMO_PORT)
+@app.route('/api/client/start')
+def client_start():
+    try:
+        _client.ensure_started()
+        return jsonify(success=True)
+    except:
+        return jsonify(success=False)
+
+@app.route('/api/client/stop')
+def client_stop():
+    _client.stop()
+    return jsonify(success=True)
+
+@app.route('/api/client/status')
+def client_status():
+    return jsonify(
+        running=_client.running(),
+    )
+
 _mcp = MCPService()
 @app.route('/api/mcp/start')
 def mcp_start():
