@@ -1,7 +1,10 @@
 import atexit
 import subprocess
+from queue import Empty, Queue
+from threading import Thread
 
 import psutil
+from pyparsing import line
 
 
 class ExternalService:
@@ -37,13 +40,33 @@ class ExternalService:
         if self.running():
             return
 
-        self._process = subprocess.Popen(self.cmd)
+        self._process = subprocess.Popen(
+            self.cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            bufsize=1, # line buffered
+            )
+
         try:
             # see if external service stays started
             self._process.wait(self.expected_startup_time)
             raise RuntimeError(f"Failed to start `{' '.join(self.cmd)}`\n{self._process.stderr.read()}")
         except subprocess.TimeoutExpired:
-            return
+            pass
+
+        self.set_up_io_queue()
+
+    def set_up_io_queue(self):
+        self.stdout_q = Queue()
+        def enqueue_stdout():
+            for line in iter(self._process.stdout.readline, ""):
+                self.stdout_q.put(line)
+        Thread(
+            target=enqueue_stdout,
+            daemon=True,
+            ).start()
+
 
     def stop(self):
         if self._process is None:
@@ -65,3 +88,18 @@ class ExternalService:
                 p.kill()
 
         self._process = None
+
+    def read(self, n):
+        "Read at most n lines of output if availble."
+        if self._process is None:
+            return ""
+
+        lines = []
+        try:
+            for _ in range(n):
+                lines.append(self.stdout_q.get_nowait())
+        except Empty:
+            # out of lines
+            pass
+
+        return "".join(lines)

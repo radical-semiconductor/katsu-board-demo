@@ -5,6 +5,7 @@ from flask import jsonify
 import opensslkeys
 from app import app
 from mcpservice import MCPService
+from opensslclient import OpenSslClient
 from opensslserver import OpenSslServer
 
 
@@ -55,6 +56,12 @@ def server_status():
         running=_server.running(),
     )
 
+@app.route('/api/server/read')
+def server_read():
+    return jsonify(
+        text=_server.read(1),
+    )
+
 _client = OpenSslClient(ECHO_DEMO_PORT)
 @app.route('/api/client/start')
 def client_start():
@@ -73,6 +80,12 @@ def client_stop():
 def client_status():
     return jsonify(
         running=_client.running(),
+    )
+
+@app.route('/api/client/read')
+def client_read():
+    return jsonify(
+        text=_client.read(1),
     )
 
 _mcp = MCPService()

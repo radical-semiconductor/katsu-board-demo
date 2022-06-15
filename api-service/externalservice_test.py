@@ -57,3 +57,10 @@ def test_can_report_status(service):
     assert dummy_service_running() == service.running()
     service.ensure_started()
     assert dummy_service_running() == service.running()
+
+def test_service_can_be_read(service):
+    service.ensure_started()
+    assert service.readline() == "radical\nra"
+
+def test_unstarted_service_can_be_read_as_empty(service):
+    assert service.readline() == ""
