@@ -1,9 +1,13 @@
 ﻿@page "/echodemo"
+@using frontend.Pages.EchoDemoPage.KeysCertsComponent
 
 <PageTitle>TLS Echo</PageTitle>
 
 <h3>Open SSL Client-Server Echo Demo</h3>
 
+<KeysCerts />
+
+<h4>Server and Client Control</h4>
 <ServerControl />
 <ClientControl />
 
