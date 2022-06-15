@@ -31,7 +31,7 @@
 
     private async Task UpdateServerStatus()
     {
-        var server_status = await http.GetFromJsonAsync<ServiceStatusResponse>("api/server/status");
+        var server_status = await http.GetFromJsonAsync<ExternalServiceStatusResponse>("api/server/status");
         if (server_status is not null)
             _running = server_status.running;
         StateHasChanged();
