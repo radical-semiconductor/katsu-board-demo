@@ -7,12 +7,12 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-Uri baseaddress;
+string baseaddress;
 if (builder.HostEnvironment.IsDevelopment())
-    baseaddress = new Uri(builder.Configuration["ApiBaseAddress"]);
+    baseaddress = builder.Configuration["ApiBaseAddress"] ?? builder.HostEnvironment.BaseAddress;
 else
-    baseaddress = new Uri(builder.HostEnvironment.BaseAddress);
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = baseaddress });
+    baseaddress = builder.HostEnvironment.BaseAddress;
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new(baseaddress) });
 builder.Services.AddSingleton<ConfigReader>();
 builder.Services.AddMudServices();
 
