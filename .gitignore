@@ -3,3 +3,5 @@ __pycache__
 **/obj
 *.crt
 *.key
+*.egg-info
+python/build

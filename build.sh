@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
-
 set -e
-pushd ./frontend
+
+KATSU_PROJECT_ROOT=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+
+pushd $KATSU_PROJECT_ROOT/frontend
     dotnet publish
 popd
 
-pushd ./api-service
+pushd $KATSU_PROJECT_ROOT/pykatsu
     pipenv sync
     pipenv graph
 popd

@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pykatsu = {editable = true, path = "."}
+
+[dev-packages]
+pynvim = "*"
+pytest = "*"
+ipython = "*"
+
+[requires]
+python_version = "3.10"
+
