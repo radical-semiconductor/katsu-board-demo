@@ -1,0 +1,28 @@
+on:
+  release:
+    types: [created]
+
+name: Add Prebuild Blazor Frontend to Release
+jobs:
+  generate:
+    name: Create release-artifacts
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Publish Release Build
+      run: dotnet publish -c Release -o ${{ github.workspace }}/frontend-blazor-output/
+
+    - name: Zip Release Build
+      uses: TheDoctor0/zip-release@0.6.2
+      with:
+        filename: frontend-blazor.zip
+        path: ${{ github.workspace }}/frontend-blazor-output/
+        directory: ${{ github.workspace }}
+
+    - name: Upload the artifacts
+      uses: skx/github-action-publish-binaries@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        args: ${{ github.workspace }}/frontend-blazor.zip
