@@ -36,7 +36,7 @@ jobs:
       run: openssl version
     - name: Test
       run: |
-        yes radical | head 5
+        yes radical | head -n5
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
