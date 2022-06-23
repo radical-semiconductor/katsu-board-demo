@@ -33,13 +33,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Restore Python dependecies
-      uses: VaultVulp/action-pipenv@v2.0.1
-      with:
-        command: install --dev
-    - name: Test
-      uses: VaultVulp/action-pipenv@v2.0.1
-      with:
-        command: run python -m pytest
+      run: pipenv install --dev
+    - name: Test Backend Flask
+      run: pipenv run python -m pytest
 
   backend-flask-windows:
     runs-on: windows-latest
@@ -49,10 +45,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Restore Python dependecies
-      uses: VaultVulp/action-pipenv@v2.0.1
-      with:
-        command: install --dev
-    - name: Test
-      uses: VaultVulp/action-pipenv@v2.0.1
-      with:
-        command: run python -m pytest
+      run: pipenv install --dev
+    - name: Test Backend Flask
+      run: pipenv run python -m pytest
