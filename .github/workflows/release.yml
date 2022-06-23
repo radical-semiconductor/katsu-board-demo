@@ -4,9 +4,12 @@ on:
 
 name: Add Prebuild Blazor Frontend to Release
 jobs:
-  generate:
-    name: Create release-artifacts
+  blazor-frontend-release-build:
+    name: Build and Zip Blazor Frontend
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
     steps:
     - uses: actions/checkout@v3
 
