@@ -12,7 +12,7 @@ def openssl_client():
     s = OpenSslServer(9898)
     s.ensure_started()
     import time
-    time.sleep(1)
+    time.sleep(5)
     c = OpenSslClient(9898)
     yield c
     c.stop()
