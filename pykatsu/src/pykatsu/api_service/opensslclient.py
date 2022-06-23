@@ -12,7 +12,7 @@ class OpenSslClient(ExternalService):
             'openssl',
             's_client',
             f'-connect=localhost:{self.port}',
-            '-servername=localhost',
+            '-servername=radicalsemiconductor.com',
             '-tls1_2',
             ]
 
