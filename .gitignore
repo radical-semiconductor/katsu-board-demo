@@ -4,4 +4,3 @@ __pycache__
 *.crt
 *.key
 *.egg-info
-python/build
