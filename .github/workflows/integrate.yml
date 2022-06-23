@@ -1,0 +1,58 @@
+name: Build & Test
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  frontend-blazor:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore .Net dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+
+  backend-flask-linux:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./pykatsu
+    steps:
+    - uses: actions/checkout@v3
+    - name: Restore Python dependecies
+      uses: VaultVulp/action-pipenv@v2.0.1
+      with:
+        command: install --dev
+    - name: Test
+      uses: VaultVulp/action-pipenv@v2.0.1
+      with:
+        command: run python -m pytest
+
+  backend-flask-windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: ./pykatsu
+    steps:
+    - uses: actions/checkout@v3
+    - name: Restore Python dependecies
+      uses: VaultVulp/action-pipenv@v2.0.1
+      with:
+        command: install --dev
+    - name: Test
+      uses: VaultVulp/action-pipenv@v2.0.1
+      with:
+        command: run python -m pytest
