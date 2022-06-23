@@ -12,7 +12,6 @@ class OpenSslClient(ExternalService):
             'openssl',
             's_client',
             f'-connect=localhost:{self.port}',
-            '-tls1_3',
             ]
 
     @property
