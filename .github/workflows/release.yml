@@ -21,7 +21,6 @@ jobs:
       with:
         filename: frontend-blazor.zip
         path: ${{ github.workspace }}/frontend-blazor-output/
-        directory: ${{ github.workspace }}
 
     - name: Upload the artifacts
       uses: skx/github-action-publish-binaries@master
