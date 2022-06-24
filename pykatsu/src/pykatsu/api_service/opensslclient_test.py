@@ -9,11 +9,12 @@ from .test_helpers import process_is_running
 @pytest.fixture(scope='session')
 def openssl_client():
     opensslkeys.ensure_generated()
-    s = OpenSslServer(15000)
+    port = 15000
+    s = OpenSslServer(port)
     s.ensure_started()
     import time
     time.sleep(1)
-    c = OpenSslClient(15000)
+    c = OpenSslClient(port)
     yield c
     c.stop()
     s.stop()
