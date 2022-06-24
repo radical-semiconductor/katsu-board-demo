@@ -19,9 +19,10 @@ jobs:
     - name: Zip Release Build
       uses: TheDoctor0/zip-release@0.6.2
       with:
-        filename: frontend-blazor.zip
+        filename: frontend-blazor.tar.gz
         path: frontend-blazor-output
         directory: ${{ github.workspace }}
+        type: tar
 
     - name: Upload the artifacts
       uses: skx/github-action-publish-binaries@master
