@@ -58,7 +58,7 @@ class ExternalService:
             pass
 
     def set_up_io_queue(self):
-        self.stdout_q = Queue(maxsize=20)
+        self.stdout_q = Queue(maxsize=4000)
         def enqueue_stdout():
             for line in iter(self._process.stdout.readline, ""):
                 self.stdout_q.put(line)
