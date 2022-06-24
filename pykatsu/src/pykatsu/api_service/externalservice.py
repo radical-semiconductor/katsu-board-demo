@@ -101,6 +101,5 @@ class ExternalService:
         except Empty:
             # out of lines
             pass
-        print(lines)
 
         return "".join(lines)
