@@ -5,7 +5,6 @@ from queue import Empty, Queue
 from threading import Thread
 
 import psutil
-from pyparsing import line
 
 
 class ExternalService:
