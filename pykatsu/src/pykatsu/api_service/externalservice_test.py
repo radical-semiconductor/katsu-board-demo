@@ -86,9 +86,9 @@ def test_crashed_service_can_be_read(service):
     os.kill(service.pid, signal.SIGKILL)
     assert service.read(2) == "radical\nradical\n"
 
-def test_unstartable_service_can_still_be_read(unstartable_service):
+def test_unstartable_service_can_still_be_read_empty(unstartable_service):
     try:
         unstartable_service.ensure_started()
     except:
         pass
-    assert unstartable_service.read(1) == "radical\n"
+    assert unstartable_service.read(1) == ""

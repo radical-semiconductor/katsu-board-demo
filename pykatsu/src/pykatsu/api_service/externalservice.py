@@ -53,7 +53,7 @@ class ExternalService:
         try:
             # see if external service stays started
             self._process.wait(self.expected_startup_time)
-            raise RuntimeError(f"Failed to start `{' '.join(self.cmd)}`\n{self._process.stdout.read()}")
+            raise RuntimeError(f"Failed to start `{' '.join(self.cmd)}`\n{''.join(self.read(100))}")
         except subprocess.TimeoutExpired:
             pass
 
