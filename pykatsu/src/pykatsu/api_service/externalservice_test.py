@@ -1,3 +1,6 @@
+import os
+import signal
+
 import pytest
 
 from .externalservice import ExternalService
@@ -16,6 +19,21 @@ class DummyYesService(ExternalService):
 @pytest.fixture
 def service():
     s = DummyYesService()
+    yield s
+    s.stop()
+
+class DummyUnstartableService(ExternalService):
+    @property
+    def cmd(self):
+        return ['echo', 'radical']
+
+    @property
+    def expected_startup_time(self):
+        return 0.5
+
+@pytest.fixture
+def unstartable_service():
+    s = DummyUnstartableService()
     yield s
     s.stop()
 
@@ -44,8 +62,6 @@ def test_ensure_started_leaves_running_instance_running(service):
 def test_ensure_started_restarts_if_previously_running_crashes(service):
     service.ensure_started()
     assert dummy_service_running()
-    import os
-    import signal
 
     # kill via outside channel
     os.kill(service.pid, signal.SIGKILL)
@@ -64,3 +80,15 @@ def test_service_can_be_read(service):
 
 def test_unstarted_service_can_be_read_as_empty(service):
     assert service.read(2) == ""
+
+def test_crashed_service_can_be_read(service):
+    service.ensure_started()
+    os.kill(service.pid, signal.SIGKILL)
+    assert service.read(2) == "radical\nradical\n"
+
+def test_unstartable_service_can_still_be_read(unstartable_service):
+    try:
+        unstartable_service.ensure_started()
+    except:
+        pass
+    assert unstartable_service.read(1) == "radical\n"

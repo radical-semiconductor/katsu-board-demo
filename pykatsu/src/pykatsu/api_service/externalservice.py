@@ -48,14 +48,14 @@ class ExternalService:
             bufsize=1, # line buffered
             )
 
+        self.set_up_io_queue()
+
         try:
             # see if external service stays started
             self._process.wait(self.expected_startup_time)
             raise RuntimeError(f"Failed to start `{' '.join(self.cmd)}`\n{self._process.stdout.read()}")
         except subprocess.TimeoutExpired:
             pass
-
-        self.set_up_io_queue()
 
     def set_up_io_queue(self):
         self.stdout_q = Queue(maxsize=20)
