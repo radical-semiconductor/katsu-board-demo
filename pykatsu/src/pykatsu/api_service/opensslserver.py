@@ -11,6 +11,7 @@ class OpenSslServer(ExternalService):
         return [
             'openssl',
             's_server',
+            '-debug',
             '-cert=../radical.crt',
             '-key=../radical.key',
             f'-accept={self.port}',

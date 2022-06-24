@@ -11,6 +11,7 @@ class OpenSslClient(ExternalService):
         return [
             'openssl',
             's_client',
+            '-debug',
             f'-connect=localhost:{self.port}',
             ]
 
