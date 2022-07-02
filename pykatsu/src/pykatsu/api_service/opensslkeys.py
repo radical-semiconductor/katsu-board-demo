@@ -2,6 +2,8 @@ import os
 import subprocess
 from pathlib import Path
 
+from .openssl import OPENSSL_BIN_PATH
+
 KEY_PATH = Path('../radical.key')
 CRT_PATH = KEY_PATH.with_suffix('.crt')
 
@@ -10,7 +12,7 @@ def ensure_generated():
         return
     # generate private key and self signed cert
     subprocess.run([
-        'openssl',
+        str(OPENSSL_BIN_PATH),
         'req',
         '-x509',
         '-newkey=rsa:4096', # also generate key
