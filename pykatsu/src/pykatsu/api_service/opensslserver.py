@@ -1,5 +1,7 @@
 from .externalservice import ExternalService
 
+from pykatsu.projectpath import  KATSU_PROJECT_ROOT
+
 
 class OpenSslServer(ExternalService):
     def __init__(self, port):
@@ -9,7 +11,7 @@ class OpenSslServer(ExternalService):
     @property
     def cmd(self):
         return [
-            'openssl',
+            str(KATSU_PROJECT_ROOT / 'openssl' / 'apps' / 'openssl'),
             's_server',
             '-debug',
             '-cert=../radical.crt',

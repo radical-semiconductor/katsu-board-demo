@@ -1,4 +1,5 @@
 from .externalservice import ExternalService
+from pykatsu.projectpath import  KATSU_PROJECT_ROOT
 
 
 class OpenSslClient(ExternalService):
@@ -9,7 +10,7 @@ class OpenSslClient(ExternalService):
     @property
     def cmd(self):
         return [
-            'openssl',
+            str(KATSU_PROJECT_ROOT / 'openssl' / 'apps' / 'openssl'),
             's_client',
             '-debug',
             f'-connect=localhost:{self.port}',

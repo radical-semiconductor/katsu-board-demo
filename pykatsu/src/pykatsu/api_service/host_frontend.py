@@ -1,11 +1,10 @@
 import os
-from pathlib import Path
 
 from flask import redirect, send_from_directory, url_for
 
+from ..projectpath import KATSU_PROJECT_ROOT
 from .flaskapp import app
 
-KATSU_PROJECT_ROOT = Path(os.environ['KATSU_PROJECT_ROOT'])
 FRONTEND_BLAZOR_OUTPUT_PATH = KATSU_PROJECT_ROOT / "frontend-blazor-output" / "wwwroot"
 if FRONTEND_BLAZOR_OUTPUT_PATH.exists():
     print("Serving frontend-blazor using flask.\n")
