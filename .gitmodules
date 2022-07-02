@@ -1,0 +1,6 @@
+[submodule "liboqs"]
+	path = liboqs
+	url = git@github.com:radical-semiconductor/liboqs.git
+[submodule "openssl"]
+	path = openssl
+	url = git@github.com:radical-semiconductor/openssl.git
