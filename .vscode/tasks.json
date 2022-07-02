@@ -9,7 +9,8 @@
             "dependsOrder": "parallel",
             "dependsOn": [
                 "api-service",
-                "frontend"
+                "frontend",
+                "openssl"
             ],
             "problemMatcher": []
         },
@@ -30,6 +31,16 @@
                 "panel": "dedicated",
                 "group": "develop"
             }
+        },
+        {
+            "label": "openssl",
+            "type": "shell",
+            "command": "./develop.openssl.sh",
+            "presentation": {
+                "panel": "dedicated",
+                "group": "develop"
+            }
         }
+
     ]
 }
