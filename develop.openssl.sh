@@ -14,7 +14,7 @@ popd
 
 pushd $KATSU_PROJECT_ROOT/openssl
     if [ ! -f Makefile ]; then
-        ./Configure no-shared linux-x86_64 -lm
+        ./Configure no-shared linux-x86_64 -lm --prefix="$KATSU_PROJECT_ROOT/openssl-output"
     fi
 popd
 
@@ -29,6 +29,7 @@ while :; do
 
     pushd $KATSU_PROJECT_ROOT/openssl
         make -j
+        make -j install_sw install_ssldirs
     popd
 
     printf "\n### Watching for edits to liboqs and openssl ###\n"
