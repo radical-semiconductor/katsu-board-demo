@@ -49,8 +49,8 @@ jobs:
       working-directory: ./openssl
       run: |
         ./Configure no-shared linux-x86_64 -lm --prefix="${{ github.workspace }}/openssl-output"
-        make -j
-        make -j install_sw install_ssldirs
+        make -j2
+        make -j2 install_sw install_ssldirs
 
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
