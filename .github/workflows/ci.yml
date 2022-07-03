@@ -57,6 +57,7 @@ jobs:
       working-directory: ./openssl
       run: |
         ./Configure no-shared linux-x86_64 -lm --prefix="${{ github.workspace }}/openssl-output"
+        export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
         make -j2
         make -j2 install_sw install_ssldirs
         ls -al "${{ github.workspace }}/openssl-output"
