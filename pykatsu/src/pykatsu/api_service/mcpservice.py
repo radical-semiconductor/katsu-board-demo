@@ -1,4 +1,5 @@
 import socket
+import sys
 
 from ..mcp_mock import mcp_pb2, util
 from .externalservice import ExternalService
@@ -7,7 +8,11 @@ from .externalservice import ExternalService
 class MCPService(ExternalService):
     @property
     def cmd(self):
-        return ['../start.mcp-mock.sh']
+        return [
+            sys.executable,
+            '-m', 'pykatsu.mcp_mock.mcp',
+            '1337',
+            ]
 
     @property
     def expected_startup_time(self):
