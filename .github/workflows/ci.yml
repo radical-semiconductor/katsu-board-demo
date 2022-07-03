@@ -67,6 +67,7 @@ jobs:
       with:
         python-version: "3.10"
         cache: 'pipenv'
+        cache-dependency-path: '**/Pipfile.lock'
 
     - name: Install pipenv
       run: |
@@ -128,6 +129,7 @@ jobs:
       with:
         python-version: "3.10"
         cache: 'pipenv'
+        cache-dependency-path: '**/Pipfile.lock'
 
     - name: Install pipenv
       run: |
