@@ -1,5 +1,6 @@
 from .externalservice import ExternalService
 from .openssl import OPENSSL_BIN_PATH
+from .opensslkeys import CRT_PATH, KEY_PATH
 
 
 class OpenSslServer(ExternalService):
@@ -13,8 +14,8 @@ class OpenSslServer(ExternalService):
             str(OPENSSL_BIN_PATH),
             's_server',
             '-debug',
-            '-cert=../radical.crt',
-            '-key=../radical.key',
+            f'-cert={CRT_PATH}',
+            f'-key={KEY_PATH}',
             f'-accept={self.port}',
             ]
 

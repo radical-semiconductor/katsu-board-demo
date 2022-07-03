@@ -2,9 +2,11 @@ import os
 import subprocess
 from pathlib import Path
 
+from pykatsu.projectpath import KATSU_PROJECT_ROOT
+
 from .openssl import OPENSSL_BIN_PATH, OPENSSL_ENV
 
-KEY_PATH = Path('../radical.key')
+KEY_PATH = Path(f'{KATSU_PROJECT_ROOT}/radical.key')
 CRT_PATH = KEY_PATH.with_suffix('.crt')
 
 def ensure_generated():
