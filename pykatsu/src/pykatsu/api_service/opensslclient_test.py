@@ -6,7 +6,7 @@ from .opensslserver import OpenSslServer
 from .test_helpers import process_is_running
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='function')
 def openssl_client_server():
     opensslkeys.ensure_generated()
     port = 15000
