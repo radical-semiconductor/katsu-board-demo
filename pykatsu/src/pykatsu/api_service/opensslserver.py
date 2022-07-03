@@ -21,7 +21,4 @@ class OpenSslServer(ExternalService):
 
     @property
     def expected_startup_time(self):
-        # dev machine took about 0.001 before failing out
-        # with missing keys
-        # give margin of safety
-        return 0.01
+        return 0.5
