@@ -109,7 +109,7 @@ jobs:
         perl Configure no-makedepend VC-WIN64A
         nmake
         nmake install DESTDIR="${{ github.workspace }}\openssl-output"
-        dir "${{ github.workspace }}\openssl-output" /s
+        Get-ChildItem "${{ github.workspace }}\openssl-output" -s
 
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
