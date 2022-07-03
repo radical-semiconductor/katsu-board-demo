@@ -103,9 +103,7 @@ jobs:
     - name: build openssl
       working-directory: ./openssl
       run: |
-        mkdir _build
-        cd _build
-        perl ..\Configure no-makedepend VC-WIN64A
+        perl Configure no-makedepend VC-WIN64A
         nmake
         nmake install DESTDIR="${{ github.workspace }}\openssl-output"
 
