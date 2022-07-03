@@ -18,5 +18,5 @@ def test_server_can_start(openssl_server:OpenSslServer):
 
 def test_server_cant_start_without_keys():
     opensslkeys.purge()
-    with pytest.raises(RuntimeError, match="Failed to start `openssl"):
+    with pytest.raises(RuntimeError, match="Failed to start `.*openssl"):
         OpenSslServer(5555).ensure_started()
