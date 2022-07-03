@@ -5,7 +5,7 @@ export KATSU_PROJECT_ROOT=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
 # Get prebuilt frontend-blazor
 FRONTEND_ARCHIVE='http://github.com/radical-semiconductor/katsu-board-demo/releases/latest/download/frontend-blazor.tar.gz'
-FRONTEND_ARCHIVE_OUTPUT=blazor-frontend-output
+FRONTEND_ARCHIVE_OUTPUT=frontend-blazor-output
 if [ ! -d "$FRONTEND_ARCHIVE_OUTPUT" ]; then
     curl --silent --show-error --location $FRONTEND_ARCHIVE | tar zx
 fi
