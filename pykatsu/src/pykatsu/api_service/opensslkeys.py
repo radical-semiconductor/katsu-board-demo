@@ -2,7 +2,7 @@ import os
 import subprocess
 from pathlib import Path
 
-from .openssl import OPENSSL_BIN_PATH
+from .openssl import OPENSSL_BIN_PATH, OPENSSL_ENV
 
 KEY_PATH = Path('../radical.key')
 CRT_PATH = KEY_PATH.with_suffix('.crt')
@@ -20,7 +20,9 @@ def ensure_generated():
         f'-keyout={KEY_PATH}',
         f'-out={CRT_PATH}',
         '-subj=/C=US/ST=Oregon/L=Portland/O=Company Name/OU=Org/CN=localhost',
-        ])
+        ],
+        env=OPENSSL_ENV,
+        )
 
 def purge():
     for p in [KEY_PATH, CRT_PATH]:
