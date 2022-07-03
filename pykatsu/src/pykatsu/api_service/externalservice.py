@@ -73,20 +73,19 @@ class ExternalService:
         if self._process is None:
             return
 
-        if not self.running():
-            # died or killed by outside means
-            self._process = None
-            return
-
         parent = psutil.Process(self.pid)
         children = [c for c in parent.children(recursive=True)]
         for p in children + [parent]:
-            p.terminate()
             try:
-                # wait for upto 5 seconds for graceful shutdown
-                p.wait(5)
-            except psutil.TimeoutExpired:
-                p.kill()
+                p.terminate()
+                try:
+                    # wait for upto 5 seconds for graceful shutdown
+                    p.wait(5)
+                except psutil.TimeoutExpired:
+                    p.kill()
+            except psutil.NoSuchProcess:
+                # Handle case for both the process and subprocesses
+                pass
 
         self._process = None
 
