@@ -17,6 +17,13 @@ if [ ! -d "$OPENSSL_ARCHIVE_OUTPUT" ]; then
     curl --silent --show-error --location $OPENSSL_ARCHIVE | tar zx
 fi
 
+if command -v pipenv >/dev/null 2>&1 ; then
+    echo "pipenv already installed"
+else
+    pip install --user pipx
+    pipx install pipenv
+fi
+
 pushd $KATSU_PROJECT_ROOT/pykatsu
     pipenv sync
     pipenv graph
