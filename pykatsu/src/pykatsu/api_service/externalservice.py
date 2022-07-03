@@ -73,7 +73,13 @@ class ExternalService:
         if self._process is None:
             return
 
-        parent = psutil.Process(self.pid)
+        try:
+            parent = psutil.Process(self.pid)
+        except psutil.NoSuchProcess:
+            # Handle case for both the process and subprocesses
+            self._process = None
+            return
+
         children = [c for c in parent.children(recursive=True)]
         for p in children + [parent]:
             try:
