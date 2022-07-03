@@ -64,7 +64,7 @@ def test_ensure_started_restarts_if_previously_running_crashes(service):
     assert dummy_service_running()
 
     # kill via outside channel
-    os.kill(service.pid, signal.SIGKILL)
+    os.kill(service.pid, signal.SIGTERM)
     assert not dummy_service_running()
     service.ensure_started()
     assert dummy_service_running()
@@ -83,7 +83,7 @@ def test_unstarted_service_can_be_read_as_empty(service):
 
 def test_crashed_service_can_be_read(service):
     service.ensure_started()
-    os.kill(service.pid, signal.SIGKILL)
+    os.kill(service.pid, signal.SIGTERM)
     assert service.read(2) == "radical\nradical\n"
 
 def test_unstartable_service_can_still_be_read_empty(unstartable_service):
