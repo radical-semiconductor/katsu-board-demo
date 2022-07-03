@@ -42,6 +42,7 @@ class ExternalService:
 
         self._process = subprocess.Popen(
             self.cmd,
+            stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,
