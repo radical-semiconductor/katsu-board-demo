@@ -1,0 +1,43 @@
+on:
+  release:
+    types: [created]
+
+name: Add Prebuilt OpenSSL to Release
+jobs:
+  openssl-release-build-linux-x86_64:
+    name: Build and Zip OpenSSL
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: build liboqs
+      working-directory: ./liboqs
+      run: |
+        mkdir build && cd build
+        cmake -GNinja -DCMAKE_INSTALL_PREFIX="${{ github.workspace }}/openssl/oqs" ..
+        ninja
+        ninja install
+
+    - name: build openssl
+      working-directory: ./openssl
+      run: |
+        ./Configure no-shared linux-x86_64 -lm --prefix="${{ github.workspace }}/openssl-output"
+        make -j
+        make -j install_sw install_ssldirs
+
+    - name: Zip Release Build
+      uses: TheDoctor0/zip-release@0.6.2
+      with:
+        filename: openssl.linux-x86_64.tar.gz
+        path: openssl-output
+        directory: ${{ github.workspace }}
+        type: tar
+
+    - name: Upload the artifacts
+      uses: skx/github-action-publish-binaries@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        args: ${{ github.workspace }}/openssl.linux-x86_64.tar.gz

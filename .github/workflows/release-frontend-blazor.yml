@@ -2,7 +2,7 @@ on:
   release:
     types: [created]
 
-name: Add Prebuild Blazor Frontend to Release
+name: Add Prebuilt Blazor Frontend to Release
 jobs:
   blazor-frontend-release-build:
     name: Build and Zip Blazor Frontend
