@@ -73,7 +73,7 @@ jobs:
 
     - name: Test Backend Flask
       run: |
-        sudo pipenv run python -m pytest
+        pipenv run python -m pytest
 
   backend-flask-windows:
     runs-on: windows-latest
