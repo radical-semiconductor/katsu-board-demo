@@ -8,9 +8,8 @@ if sys.platform.startswith('linux'):
     OPENSSL_BIN_PATH = OPENSSL_ROOT_PATH / 'bin' / 'openssl'
     OPENSSL_CONFIG_PATH = OPENSSL_ROOT_PATH / 'ssl' / 'openssl.cnf'
 elif sys.platform.startswith('win'):
-    OPENSSL_ROOT_PATH = OPENSSL_ROOT_PATH / 'Program Files' / 'OpenSSL'
-    OPENSSL_BIN_PATH = OPENSSL_ROOT_PATH  / 'bin' / 'openssl.exe'
-    OPENSSL_CONFIG_PATH = OPENSSL_ROOT_PATH / 'ssl' / 'openssl.cnf'
+    OPENSSL_BIN_PATH = OPENSSL_ROOT_PATH / 'Program Files' / 'OpenSSL' / 'bin' / 'openssl.exe'
+    OPENSSL_CONFIG_PATH = OPENSSL_ROOT_PATH / 'Common Files' / 'SSL' / 'openssl.cnf'
 else:
     raise NotImplementedError()
 
