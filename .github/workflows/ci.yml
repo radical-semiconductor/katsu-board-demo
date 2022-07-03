@@ -101,9 +101,9 @@ jobs:
       working-directory: ./openssl
       run: |
         mkdir _build && cd _build
-        perl ..\Configure no-shared linux-x86_64 -lm --prefix="${{ github.workspace }}/openssl-output"
+        perl ..\Configure no-makedepend VC-WIN64A
         nmake
-        nmake install_sw install_ssldirs
+        nmake install DESTDIR="${{ github.workspace }}\openssl-output"
 
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
