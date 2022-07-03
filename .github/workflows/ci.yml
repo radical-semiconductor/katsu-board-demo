@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ "master" ]
 
+env:
+  KATSU_PROJECT_ROOT: ${{ github.workspace }}
+
 jobs:
   frontend-blazor:
     runs-on: ubuntu-latest
@@ -69,7 +72,6 @@ jobs:
 
     - name: Test Backend Flask
       run: |
-        export KATSU_PROJECT_ROOT="${{ github.workspace }}"
         pipenv run python -m pytest
 
   backend-flask-windows:
@@ -124,5 +126,4 @@ jobs:
 
     - name: Test Backend Flask
       run: |
-        set KATSU_PROJECT_ROOT="${{ github.workspace }}"
         pipenv run python -m pytest
