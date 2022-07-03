@@ -68,7 +68,9 @@ jobs:
         pipenv graph
 
     - name: Test Backend Flask
-      run: pipenv run python -m pytest
+      run: |
+        export KATSU_PROJECT_ROOT="${{ github.workspace }}"
+        pipenv run python -m pytest
 
   backend-flask-windows:
     runs-on: windows-latest
@@ -121,4 +123,6 @@ jobs:
         pipenv graph
 
     - name: Test Backend Flask
-      run: pipenv run python -m pytest
+      run: |
+        set KATSU_PROJECT_ROOT="${{ github.workspace }}"
+        pipenv run python -m pytest
