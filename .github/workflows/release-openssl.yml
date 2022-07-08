@@ -13,18 +13,21 @@ jobs:
           - platform: "linux"
             vm-image: "ubuntu-latest"
             openssl-buildtarget: "linux-x86_64"
-            openssl-args: "-lm"
+            openssl-configargs: "-lm"
             openssl-make: "make"
+            openssl-makeargs: "-j"
           - platform: "macos"
             vm-image: "macos-latest"
             openssl-buildtarget: "darwin64-x86_64-cc"
-            openssl-args: ""
+            openssl-configargs: ""
             openssl-make: "make"
+            openssl-makeargs: "-j"
           - platform: "windows"
             vm-image: "windows-latest"
             openssl-buildtarget: "VC-WIN64A"
-            openssl-args: ""
+            openssl-configargs: ""
             openssl-make: "nmake"
+            openssl-makeargs: ""
 
     runs-on: ${{ matrix.vm-image }}
     steps:
@@ -55,17 +58,17 @@ jobs:
     - name: Configure OpenSSl for ${{ matrix.platform }}
       working-directory: ./openssl
       run: |
-        perl Configure no-shared ${{ matrix.openssl-buildtarget }} ${{ matrix.openssl-args }} --prefix="${{ github.workspace }}/openssl-output"
+        perl Configure no-shared ${{ matrix.openssl-buildtarget }} ${{ matrix.openssl-configargs }} --prefix="${{ github.workspace }}/openssl-output"
 
     - name: Build OpenSSl for ${{ matrix.platform }}
       working-directory: ./openssl
       run: |
-        ${{ matrix.openssl-make }} -j
+        ${{ matrix.openssl-make }} ${{ matrix.openssl-makeargs }}
 
     - name: Install OpenSSl for ${{ matrix.platform }}
       working-directory: ./openssl
       run: |
-        ${{ matrix.openssl-make }} -j install_sw install_ssldirs
+        ${{ matrix.openssl-make }} ${{ matrix.openssl-makeargs }} install_sw install_ssldirs
 
     - name: List OpenSSL Artifacts for ${{ matrix.platform }}
       run: ls "${{ github.workspace }}/openssl-output"
