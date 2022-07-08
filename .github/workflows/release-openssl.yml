@@ -11,25 +11,38 @@ jobs:
       matrix:
         include:
           - platform: "linux"
+            vm-image: "ubuntu-latest"
             openssl-buildtarget: "linux-x86_64"
             openssl-args: "-lm"
             openssl-make: "make"
           - platform: "macos"
+            vm-image: "macos-latest"
             openssl-buildtarget: "darwin64-x86_64-cc"
             openssl-args: ""
             openssl-make: "make"
           - platform: "windows"
+            vm-image: "windows-latest"
             openssl-buildtarget: "VC-WIN64A"
             openssl-args: ""
             openssl-make: "nmake"
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.vm-image }}
     steps:
     - uses: actions/checkout@v3
       with:
         submodules: recursive
 
     - uses: seanmiddleditch/gha-setup-ninja@master
+    - uses: shogo82148/actions-setup-perl@v1
+      if: ${{ matrix.platform == 'windows' }}
+    - uses: ilammy/msvc-dev-cmd@v1
+      if: ${{ matrix.platform == 'windows' }}
+      with:
+        arch: win64
+    - uses: ilammy/setup-nasm@v1
+      if: ${{ matrix.platform == 'windows' }}
+      with:
+        platform: win64
 
     - name: Build liboqs
       working-directory: ./liboqs
