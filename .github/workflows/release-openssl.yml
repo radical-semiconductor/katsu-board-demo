@@ -4,8 +4,24 @@ on:
 
 name: Add Prebuilt OpenSSL to Release
 jobs:
-  openssl-release-build-linux-x86_64:
-    name: Build and Zip OpenSSL
+  openssl-release-build:
+    name: Build and Zip OpenSSL for ${{ matrix.platform }}
+    strategy:
+      matrix:
+        include:
+          - platform: "linux"
+            openssl-buildtarget: "linux-x86_64"
+            openssl-args: "-lm"
+            openssl-make: "make"
+          - platform: "macos"
+            openssl-buildtarget: "darwin64-x86_64-cc"
+            openssl-args: ""
+            openssl-make: "make"
+          - platform: "windows"
+            openssl-buildtarget: "VC-WIN64A"
+            openssl-args: ""
+            openssl-make: "nmake"
+
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -14,7 +30,7 @@ jobs:
 
     - uses: seanmiddleditch/gha-setup-ninja@master
 
-    - name: build liboqs
+    - name: Build liboqs
       working-directory: ./liboqs
       run: |
         mkdir build && cd build
@@ -22,24 +38,35 @@ jobs:
         ninja
         ninja install
 
-    - name: build openssl
+    - name: Configure OpenSSl for ${{ matrix.platform }}
       working-directory: ./openssl
       run: |
-        ./Configure no-shared linux-x86_64 -lm --prefix="${{ github.workspace }}/openssl-output"
-        make -j
-        make -j install_sw install_ssldirs
+        perl Configure no-shared ${{ matrix.openssl-buildtarget }} ${{ matrix.openssl-args }} --prefix="${{ github.workspace }}/openssl-output"
 
-    - name: Zip Release Build
+    - name: Build OpenSSl for ${{ matrix.platform }}
+      working-directory: ./openssl
+      run: |
+        ${{ matrix.openssl-make }} -j
+
+    - name: Install OpenSSl for ${{ matrix.platform }}
+      working-directory: ./openssl
+      run: |
+        ${{ matrix.openssl-make }} -j install_sw install_ssldirs
+
+    - name: List OpenSSL Artifacts for ${{ matrix.platform }}
+      run: ls "${{ github.workspace }}/openssl-output"
+
+    - name: Zip OpenSSL Artifacts for ${{ matrix.platform }}
       uses: TheDoctor0/zip-release@0.6.2
       with:
-        filename: openssl.linux-x86_64.tar.gz
+        filename: openssl.${{ matrix.openssl-buildtarget }}.tar.gz
         path: openssl-output
         directory: ${{ github.workspace }}
         type: tar
 
-    - name: Upload the artifacts
+    - name: Upload OpenSSL Release Archive for ${{ matrix.platform }}
       uses: skx/github-action-publish-binaries@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        args: ${{ github.workspace }}/openssl.linux-x86_64.tar.gz
+        args: ${{ github.workspace }}/openssl.${{ matrix.openssl-buildtarget }}.tar.gz
