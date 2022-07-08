@@ -7,6 +7,7 @@ jobs:
   openssl-release-build:
     name: Build and Zip OpenSSL for ${{ matrix.platform }}
     strategy:
+      fail-fast: false
       matrix:
         include:
           - platform: "linux"
