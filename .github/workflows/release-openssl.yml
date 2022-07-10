@@ -71,7 +71,7 @@ jobs:
         ${{ matrix.openssl-make }} ${{ matrix.openssl-makeargs }} install_sw install_ssldirs
 
     - name: List OpenSSL Artifacts for ${{ matrix.platform }}
-      run: ls "${{ github.workspace }}/openssl-output"
+      run: ls -alR "${{ github.workspace }}/openssl-output"
 
     - name: Zip OpenSSL Artifacts for ${{ matrix.platform }}
       uses: TheDoctor0/zip-release@0.6.2
