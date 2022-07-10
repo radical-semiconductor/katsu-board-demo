@@ -28,42 +28,95 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
 
-  openssl-linux:
-    runs-on: ubuntu-latest
+  openssl-build:
+    id: openssl-${{ matrix.platform }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: "linux"
+            vm-image: "ubuntu-latest"
+            liboqs-cmakeargs: "-D CMAKE_C_COMPILER_LAUNCHER=ccache -D CMAKE_CXX_COMPILER_LAUNCHER=ccache"
+            openssl-buildtarget: "linux-x86_64"
+            openssl-configargs: "-lm"
+            openssl-make: "make"
+            openssl-makeargs: "-j2"
+          - platform: "macos"
+            liboqs-cmakeargs: "-D CMAKE_C_COMPILER_LAUNCHER=ccache -D CMAKE_CXX_COMPILER_LAUNCHER=ccache"
+            vm-image: "macos-latest"
+            openssl-buildtarget: "darwin64-x86_64-cc"
+            openssl-configargs: ""
+            openssl-make: "make"
+            openssl-makeargs: "-j"
+          - platform: "windows"
+            vm-image: "windows-latest"
+            openssl-buildtarget: "VC-WIN64A"
+            openssl-configargs: ""
+            openssl-make: "nmake"
+            openssl-makeargs: ""
+
+    runs-on: ${{ matrix.vm-image }}
     steps:
     - uses: actions/checkout@v3
       with:
         submodules: recursive
 
+    - uses: seanmiddleditch/gha-setup-ninja@master
+    - uses: shogo82148/actions-setup-perl@v1
+      if: ${{ matrix.platform == 'windows' }}
+    - uses: ilammy/msvc-dev-cmd@v1
+      if: ${{ matrix.platform == 'windows' }}
+      with:
+        arch: win64
+    - uses: ilammy/setup-nasm@v1
+      if: ${{ matrix.platform == 'windows' }}
+      with:
+        platform: win64
     - name: Setup build cache
+      if: ${{ matrix.platform != 'windows' }}
       uses: hendrikmuhs/ccache-action@v1.2
       with:
         key: ${{ github.job }}
 
-    - uses: seanmiddleditch/gha-setup-ninja@master
-
-    - name: build liboqs
+    - name: Build liboqs
       working-directory: ./liboqs
       run: |
         mkdir build && cd build
-        cmake -GNinja -DCMAKE_INSTALL_PREFIX="${{ github.workspace }}/openssl/oqs" -D CMAKE_C_COMPILER_LAUNCHER=ccache -D CMAKE_CXX_COMPILER_LAUNCHER=ccache ..
+        cmake -GNinja -DCMAKE_INSTALL_PREFIX="${{ github.workspace }}/openssl/oqs" ${{ matrix.liboqs-cmakeargs }} ..
         ninja
         ninja install
 
-    - name: build openssl
+    - name: Configure OpenSSl for ${{ matrix.platform }}
       working-directory: ./openssl
       run: |
-        ./Configure no-shared linux-x86_64 -lm --prefix="${{ github.workspace }}/openssl-output"
-        export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
-        make -j2
-        make -j2 install_sw install_ssldirs
-        ls -al "${{ github.workspace }}/openssl-output"
+        perl Configure no-shared ${{ matrix.openssl-buildtarget }} ${{ matrix.openssl-configargs }} --prefix="${{ github.workspace }}/openssl-output"
+
+    - name: Build OpenSSl for ${{ matrix.platform }}
+      working-directory: ./openssl
+      run: |
+        ${{ matrix.openssl-make }} ${{ matrix.openssl-makeargs }}
+
+    - name: Install OpenSSl for ${{ matrix.platform }}
+      working-directory: ./openssl
+      run: |
+        ${{ matrix.openssl-make }} ${{ matrix.openssl-makeargs }} install_sw install_ssldirs
+
+    - name: List OpenSSL Artifacts for ${{ matrix.platform }}
+      run: ls -alR "${{ github.workspace }}/openssl-output"
+
+    - name: Zip OpenSSL Artifacts for ${{ matrix.platform }}
+      uses: TheDoctor0/zip-release@0.6.2
+      with:
+        filename: openssl.${{ matrix.openssl-buildtarget }}.tar.gz
+        path: openssl-output
+        directory: ${{ github.workspace }}
+        type: tar
 
     - name: Archive openssl artifacts for linux
       uses: actions/upload-artifact@v3
       with:
-        name: openssl-output-linux
-        path: "${{ github.workspace }}/openssl-output"
+        name: openssl-output-${{ matrix.platform }}
+        path: openssl.${{ matrix.openssl-buildtarget }}.tar.gz
 
   backend-flask-linux:
     runs-on: ubuntu-latest
@@ -77,7 +130,18 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: openssl-output-linux
-        path: openssl-output
+        path: "${{ github.workspace }}"
+
+    - name: Extract OpenSSL Artifacts
+      uses: a7ul/tar-action@v1.1.0
+      id: extract
+      with:
+        command: x
+        cwd: "${{ github.workspace }}"
+        files: openssl.linux-x86_64.tar.gz
+
+    - name: List Downloaded OpenSSL Artifacts
+      run: ls -alR "${{ github.workspace }}/openssl-output"
 
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
