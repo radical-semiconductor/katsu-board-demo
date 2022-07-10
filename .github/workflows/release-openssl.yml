@@ -81,7 +81,6 @@ jobs:
         directory: ${{ github.workspace }}
         type: tar
 
-    steps:
     - name: Upload OpenSSL Release Archive for ${{ matrix.platform }}
       uses: Guerra24/upload-to-release@v1
       with:
