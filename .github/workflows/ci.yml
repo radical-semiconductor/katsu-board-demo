@@ -115,9 +115,6 @@ jobs:
       run: |
         ${{ matrix.openssl-make }} ${{ matrix.openssl-makeargs }} install_sw install_ssldirs
 
-    - name: List OpenSSL Artifacts for ${{ matrix.platform }}
-      run: ls -alR "${{ github.workspace }}/openssl-output"
-
     - name: Zip OpenSSL Artifacts for ${{ matrix.platform }}
       uses: TheDoctor0/zip-release@0.6.2
       with:
@@ -164,9 +161,6 @@ jobs:
         command: x
         cwd: "${{ github.workspace }}"
         files: openssl.${{ matrix.platform }}.tar.gz
-
-    - name: List Downloaded OpenSSL Artifacts
-      run: ls -alR "${{ github.workspace }}/openssl-output"
 
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
