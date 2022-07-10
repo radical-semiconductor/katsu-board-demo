@@ -28,11 +28,8 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
 
-  backend-flask-linux:
+  openssl-linux:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./pykatsu
     steps:
     - uses: actions/checkout@v3
       with:
@@ -61,6 +58,26 @@ jobs:
         make -j2
         make -j2 install_sw install_ssldirs
         ls -al "${{ github.workspace }}/openssl-output"
+
+    - name: Archive openssl artifacts for linux
+      uses: actions/upload-artifact@v3
+      with:
+        name: openssl-output-linux
+        path: "${{ github.workspace }}/openssl-output"
+
+  backend-flask-linux:
+    runs-on: ubuntu-latest
+    needs: openssl-linux
+    defaults:
+      run:
+        working-directory: ./pykatsu
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: actions/download-artifact@v2
+      with:
+        name: openssl-output-linux
+        path: openssl-output
 
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
