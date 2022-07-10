@@ -229,7 +229,7 @@ jobs:
       run: |
         pipenv run python -m pytest
 
-  end-to-end-test:
+  end-to-end-test-master:
     strategy:
       fail-fast: false
       matrix:
@@ -243,9 +243,6 @@ jobs:
 
     runs-on: ${{ matrix.vm-image }}
     needs: [openssl-build, frontend-blazor-build, backend-flask]
-    defaults:
-      run:
-        working-directory: ./pykatsu
     steps:
     - uses: actions/checkout@v3
 
@@ -275,5 +272,28 @@ jobs:
       run: |
         ./start.sh &
         sleep 20
+        curl --silent --show-error --location http://localhost:5000/api/timestamp
+        curl --silent --show-error --location http://localhost:5000/index.html
+
+  end-to-end-test-releasedbinaries:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: "linux"
+            vm-image: "ubuntu-latest"
+          - platform: "macos"
+            vm-image: "macos-latest"
+          - platform: "windows"
+            vm-image: "windows-latest"
+
+    runs-on: ${{ matrix.vm-image }}
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Test start script
+      run: |
+        ./start.sh &
+        sleep 35
         curl --silent --show-error --location http://localhost:5000/api/timestamp
         curl --silent --show-error --location http://localhost:5000/index.html
