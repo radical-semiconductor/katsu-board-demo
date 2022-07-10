@@ -17,16 +17,23 @@ jobs:
         working-directory: ./frontend
     steps:
     - uses: actions/checkout@v3
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.0.x
+
     - name: Restore .Net dependencies
       run: dotnet restore
+
     - name: Build
       run: dotnet build --no-restore
+
     - name: Test
       run: dotnet test --no-build --verbosity normal
+
+    - name: Publish Release Build
+      run: dotnet publish -c Release -o ${{ github.workspace }}/frontend-blazor-output/
 
     - name: Zip Frontend Blazor Artifacts
       uses: TheDoctor0/zip-release@0.6.2
