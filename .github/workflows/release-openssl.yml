@@ -15,7 +15,7 @@ jobs:
             openssl-buildtarget: "linux-x86_64"
             openssl-configargs: "-lm"
             openssl-make: "make"
-            openssl-makeargs: "-j"
+            openssl-makeargs: "-j2"
           - platform: "macos"
             vm-image: "macos-latest"
             openssl-buildtarget: "darwin64-x86_64-cc"
