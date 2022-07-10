@@ -76,7 +76,7 @@ jobs:
     - name: Zip OpenSSL Artifacts for ${{ matrix.platform }}
       uses: TheDoctor0/zip-release@0.6.2
       with:
-        filename: openssl.${{ matrix.openssl-buildtarget }}.tar.gz
+        filename: openssl.${{ matrix.platform }}.tar.gz
         path: openssl-output
         directory: ${{ github.workspace }}
         type: tar
@@ -84,7 +84,7 @@ jobs:
     - name: Upload OpenSSL Release Archive for ${{ matrix.platform }}
       uses: Guerra24/upload-to-release@v1
       with:
-        name: openssl.${{ matrix.openssl-buildtarget }}.tar.gz
+        name: openssl.${{ matrix.platform }}.tar.gz
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        path: ${{ github.workspace }}/openssl.${{ matrix.openssl-buildtarget }}.tar.gz
+        path: ${{ github.workspace }}/openssl.${{ matrix.platform }}.tar.gz
         content-type: application/gzip

@@ -11,7 +11,7 @@ if [ ! -d "$FRONTEND_ARCHIVE_OUTPUT" ]; then
 fi
 
 # Get prebuilt openssl
-OPENSSL_ARCHIVE='http://github.com/radical-semiconductor/katsu-board-demo/releases/latest/download/openssl.linux-x86_64.tar.gz'
+OPENSSL_ARCHIVE='http://github.com/radical-semiconductor/katsu-board-demo/releases/latest/download/openssl.linux.tar.gz'
 OPENSSL_ARCHIVE_OUTPUT=openssl-output
 if [ ! -d "$OPENSSL_ARCHIVE_OUTPUT" ]; then
     curl --silent --show-error --location $OPENSSL_ARCHIVE | tar zx

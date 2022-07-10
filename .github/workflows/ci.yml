@@ -163,8 +163,8 @@ jobs:
 
     - name: Install pipenv
       run: |
-        python -m pip install --upgrade pip
-        pip install pipenv
+        pip install --user pipx
+        pipx install pipenv
 
     - name: Restore Python dependecies
       run: |
