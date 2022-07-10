@@ -203,7 +203,7 @@ jobs:
             vm-image: "windows-latest"
 
     runs-on: ${{ matrix.vm-image }}
-    needs: [openssl-build, frontend-blazor-build]
+    needs: [openssl-build, frontend-blazor-build, backend-flask]
     defaults:
       run:
         working-directory: ./pykatsu
