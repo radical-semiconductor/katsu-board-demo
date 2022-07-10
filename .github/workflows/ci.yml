@@ -149,6 +149,46 @@ jobs:
             vm-image: "windows-latest"
 
     runs-on: ${{ matrix.vm-image }}
+    defaults:
+      run:
+        working-directory: ./pykatsu
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+        cache: 'pipenv'
+        cache-dependency-path: '**/Pipfile.lock'
+
+    - name: Install pipenv
+      run: |
+        pip install --user pipx
+        pipx install pipenv
+
+    - name: Restore Python dependecies
+      run: |
+        pipenv install --dev
+        pipenv graph
+
+    - name: Test Backend Flask
+      run: |
+        pipenv run python -m pytest -m'not openssl'
+
+  backend-flask-with-openssl:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: "linux"
+            vm-image: "ubuntu-latest"
+          - platform: "macos"
+            vm-image: "macos-latest"
+          - platform: "windows"
+            vm-image: "windows-latest"
+
+    runs-on: ${{ matrix.vm-image }}
     needs: openssl-build
     defaults:
       run:

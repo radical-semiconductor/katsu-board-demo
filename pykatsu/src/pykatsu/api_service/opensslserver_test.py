@@ -12,10 +12,12 @@ def openssl_server():
     yield s
     s.stop()
 
+@pytest.mark.openssl
 def test_server_can_start(openssl_server:OpenSslServer):
     openssl_server.ensure_started()
     assert process_is_running('openssl', required_args=['s_server'])
 
+@pytest.mark.openssl
 def test_server_cant_start_without_keys():
     opensslkeys.purge()
     with pytest.raises(RuntimeError, match="Failed to start `.*openssl"):

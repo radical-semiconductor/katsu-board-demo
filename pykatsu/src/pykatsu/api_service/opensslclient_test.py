@@ -19,6 +19,7 @@ def openssl_client_server():
     c.stop()
     s.stop()
 
+@pytest.mark.openssl
 def test_client_can_start(openssl_client_server):
     c, s = openssl_client_server
     try:
