@@ -159,7 +159,6 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: openssl-output-${{ matrix.platform }}
-        path: "${{ github.workspace }}"
 
     - name: Extract OpenSSL Artifacts
       uses: a7ul/tar-action@v1.1.0
@@ -213,7 +212,6 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: openssl-output-${{ matrix.platform }}
-        path: "${{ github.workspace }}"
 
     - name: Extract OpenSSL Artifacts
       uses: a7ul/tar-action@v1.1.0
@@ -225,7 +223,6 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: frontend-blazor.tar.gz
-        path: "${{ github.workspace }}"
 
     - name: Extract OpenSSL Artifacts
       uses: a7ul/tar-action@v1.1.0
