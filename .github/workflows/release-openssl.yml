@@ -81,9 +81,11 @@ jobs:
         directory: ${{ github.workspace }}
         type: tar
 
+    steps:
     - name: Upload OpenSSL Release Archive for ${{ matrix.platform }}
-      uses: skx/github-action-publish-binaries@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: Guerra24/upload-to-release@v1
       with:
-        args: ${{ github.workspace }}/openssl.${{ matrix.openssl-buildtarget }}.tar.gz
+        name: openssl.${{ matrix.openssl-buildtarget }}.tar.gz
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        path: ${{ github.workspace }}/openssl.${{ matrix.openssl-buildtarget }}.tar.gz
+        content-type: application/gzip
