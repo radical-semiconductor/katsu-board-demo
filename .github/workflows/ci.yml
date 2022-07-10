@@ -28,6 +28,20 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
 
+    - name: Zip Frontend Blazor Artifacts
+      uses: TheDoctor0/zip-release@0.6.2
+      with:
+        filename: frontend-blazor.tar.gz
+        path: frontend-blazor-output
+        directory: ${{ github.workspace }}
+        type: tar
+
+    - name: Archive openssl artifacts for linux
+      uses: actions/upload-artifact@v3
+      with:
+        name: frontend-blazor
+        path: frontend-blazor.tar.gz
+
   openssl-build:
     strategy:
       fail-fast: false
