@@ -7,6 +7,7 @@ export KATSU_PROJECT_ROOT=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 FRONTEND_ARCHIVE='http://github.com/radical-semiconductor/katsu-board-demo/releases/latest/download/frontend-blazor.tar.gz'
 FRONTEND_ARCHIVE_OUTPUT=frontend-blazor-output
 if [ ! -d "$FRONTEND_ARCHIVE_OUTPUT" ]; then
+    echo Fetching latest release of Frontend Blazor from Radical Semiconductor
     curl --silent --show-error --location $FRONTEND_ARCHIVE | tar zx
 fi
 
@@ -14,6 +15,7 @@ fi
 OPENSSL_ARCHIVE='http://github.com/radical-semiconductor/katsu-board-demo/releases/latest/download/openssl.linux.tar.gz'
 OPENSSL_ARCHIVE_OUTPUT=openssl-output
 if [ ! -d "$OPENSSL_ARCHIVE_OUTPUT" ]; then
+    echo Fetching latest release of OpenSSL from Radical Semiconductor
     curl --silent --show-error --location $OPENSSL_ARCHIVE | tar zx
 fi
 

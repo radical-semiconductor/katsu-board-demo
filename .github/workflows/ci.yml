@@ -10,7 +10,7 @@ env:
   KATSU_PROJECT_ROOT: ${{ github.workspace }}
 
 jobs:
-  frontend-blazor:
+  frontend-blazor-build:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -182,3 +182,54 @@ jobs:
     - name: Test Backend Flask
       run: |
         pipenv run python -m pytest
+
+  end-to-end-test:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: "linux"
+            vm-image: "ubuntu-latest"
+          - platform: "macos"
+            vm-image: "macos-latest"
+          - platform: "windows"
+            vm-image: "windows-latest"
+
+    runs-on: ${{ matrix.vm-image }}
+    needs: [openssl-build, frontend-blazor-build]
+    defaults:
+      run:
+        working-directory: ./pykatsu
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: actions/download-artifact@v2
+      with:
+        name: openssl-output-${{ matrix.platform }}
+        path: "${{ github.workspace }}"
+
+    - name: Extract OpenSSL Artifacts
+      uses: a7ul/tar-action@v1.1.0
+      with:
+        command: x
+        cwd: "${{ github.workspace }}"
+        files: openssl.${{ matrix.platform }}.tar.gz
+
+    - uses: actions/download-artifact@v2
+      with:
+        name: frontend-blazor.tar.gz
+        path: "${{ github.workspace }}"
+
+    - name: Extract OpenSSL Artifacts
+      uses: a7ul/tar-action@v1.1.0
+      with:
+        command: x
+        cwd: "${{ github.workspace }}"
+        files: frontend-blazor.tar.gz
+
+    - name: Test start script
+      run: |
+        ./start.sh &
+        sleep 20
+        curl --silent --show-error --location http://localhost:5000/api/timestamp
+        curl --silent --show-error --location http://localhost:5000/index.html
