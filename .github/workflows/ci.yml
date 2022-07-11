@@ -97,7 +97,7 @@ jobs:
       if: ${{ matrix.platform != 'windows' }}
       uses: hendrikmuhs/ccache-action@v1.2
       with:
-        key: ${{ github.job }}
+        key: ${{ github.job }}-${{ matrix.platform}}
 
     - name: Build liboqs
       working-directory: ./liboqs
