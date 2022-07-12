@@ -271,8 +271,8 @@ jobs:
     - name: Test start script
       run: |
         ./start.sh &
-        curl --silent --show-error --retry 7 --location http://localhost:5000/api/timestamp
-        curl --silent --show-error --retry 7 --location http://localhost:5000/index.html
+        curl --silent --show-error --retry-connrefused --retry 7 --location http://localhost:5000/api/timestamp
+        curl --silent --show-error --retry-connrefused --retry 7 --location http://localhost:5000/index.html
 
   end-to-end-test-releasedbinaries:
     strategy:
@@ -300,5 +300,5 @@ jobs:
     - name: Test start script
       run: |
         ./start.sh &
-        curl --silent --show-error --retry 7 --location http://localhost:5000/api/timestamp
-        curl --silent --show-error --retry 7 --location http://localhost:5000/index.html
+        curl --silent --show-error --retry-connrefused --retry 7 --location http://localhost:5000/api/timestamp
+        curl --silent --show-error --retry-connrefused --retry 7 --location http://localhost:5000/index.html
