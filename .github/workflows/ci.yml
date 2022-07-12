@@ -122,6 +122,11 @@ jobs:
       run: |
         ${{ matrix.openssl-make }} ${{ matrix.openssl-makeargs }} install_sw install_ssldirs
 
+    - name: Show OpenSSl Output Files for ${{ matrix.platform }}
+      working-directory: ./openssl
+      run: |
+        git status --ignored --untracked-files=all
+
     - name: Zip OpenSSL Artifacts for ${{ matrix.platform }}
       uses: TheDoctor0/zip-release@0.6.2
       with:
