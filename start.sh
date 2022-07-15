@@ -2,6 +2,7 @@
 set -e
 
 export KATSU_PROJECT_ROOT=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+export MSYS=winsymlinks:native # required for windows, via Git Bash
 
 # Get prebuilt frontend-blazor
 FRONTEND_ARCHIVE='http://github.com/radical-semiconductor/katsu-board-demo/releases/latest/download/frontend-blazor.tar.gz'
