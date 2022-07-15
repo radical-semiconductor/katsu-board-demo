@@ -204,6 +204,7 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: openssl-output-${{ matrix.platform }}
+        path: "${{ github.workspace }}"
 
     - name: Extract OpenSSL Artifacts
       uses: a7ul/tar-action@v1.1.0
@@ -254,6 +255,11 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: openssl-output-${{ matrix.platform }}
+        path: "${{ github.workspace }}"
+
+    - name: List downloaded artifact
+      shell: bash
+      run: ls -alR "${{ github.workspace }}"
 
     - name: Extract OpenSSL Artifacts
       uses: a7ul/tar-action@v1.1.0
@@ -262,9 +268,14 @@ jobs:
         cwd: "${{ github.workspace }}"
         files: openssl.${{ matrix.platform }}.tar.gz
 
+    - name: List extracted artifact
+      shell: bash
+      run: ls -alR "${{ github.workspace }}"
+
     - uses: actions/download-artifact@v2
       with:
         name: frontend-blazor.tar.gz
+        path: "${{ github.workspace }}"
 
     - name: Extract OpenSSL Artifacts
       uses: a7ul/tar-action@v1.1.0
@@ -273,10 +284,11 @@ jobs:
         cwd: "${{ github.workspace }}"
         files: frontend-blazor.tar.gz
 
-    - name: Debug out bash path
+    - name: Debug out bash installation
       shell: bash
       run: |
         type -a bash
+        help
 
     - name: Test start script
       shell: bash
@@ -308,10 +320,11 @@ jobs:
         cache: 'pipenv'
         cache-dependency-path: '**/Pipfile.lock'
 
-    - name: Debug out bash path
+    - name: Debug out bash installation
       shell: bash
       run: |
         type -a bash
+        help
 
     - name: Test start script
       shell: bash
