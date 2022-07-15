@@ -273,7 +273,13 @@ jobs:
         cwd: "${{ github.workspace }}"
         files: frontend-blazor.tar.gz
 
+    - name: Debug out bash path
+      shell: bash
+      run: |
+        type -a bash
+
     - name: Test start script
+      shell: bash
       run: |
         ./start.sh &
         curl --silent --show-error --retry-connrefused --retry 7 --location http://localhost:5000/api/timestamp
@@ -302,7 +308,13 @@ jobs:
         cache: 'pipenv'
         cache-dependency-path: '**/Pipfile.lock'
 
+    - name: Debug out bash path
+      shell: bash
+      run: |
+        type -a bash
+
     - name: Test start script
+      shell: bash
       run: |
         ./start.sh &
         curl --silent --show-error --retry-connrefused --retry 7 --location http://localhost:5000/api/timestamp
