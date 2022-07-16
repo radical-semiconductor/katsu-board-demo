@@ -266,7 +266,7 @@ jobs:
 
     - uses: actions/download-artifact@v2
       with:
-        name: frontend-blazor.tar.gz
+        name: frontend-blazor
         path: "${{ github.workspace }}"
 
     - name: Extract OpenSSL Artifacts
