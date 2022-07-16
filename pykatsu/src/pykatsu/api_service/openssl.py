@@ -10,7 +10,7 @@ if sys.platform.startswith('linux'):
 elif sys.platform.startswith('darwin'):
     OPENSSL_BIN_PATH = OPENSSL_ROOT_PATH / 'bin' / 'openssl'
     OPENSSL_CONFIG_PATH = OPENSSL_ROOT_PATH / 'ssl' / 'openssl.cnf'
-elif sys.platform.startswith('win'):
+elif sys.platform.startswith('win') or str(sys.executable).lower().endswith('exe'):
     OPENSSL_BIN_PATH = OPENSSL_ROOT_PATH / 'Program Files' / 'OpenSSL' / 'bin' / 'openssl.exe'
     OPENSSL_CONFIG_PATH = OPENSSL_ROOT_PATH / 'Program Files' / 'Common Files' / 'SSL' / 'openssl.cnf'
 else:
