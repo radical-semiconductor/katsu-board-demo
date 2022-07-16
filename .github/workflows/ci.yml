@@ -11,6 +11,7 @@ env:
 
 jobs:
   frontend-blazor-build:
+    name: frontend-blazor Build & Test
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -50,6 +51,7 @@ jobs:
         path: frontend-blazor.tar.gz
 
   openssl-build:
+    name: openssl Build
     strategy:
       fail-fast: false
       matrix:
@@ -142,6 +144,7 @@ jobs:
         path: openssl.${{ matrix.platform }}.tar.gz
 
   backend-flask:
+    name: backend-flask Build & Test
     strategy:
       fail-fast: false
       matrix:
@@ -182,6 +185,7 @@ jobs:
         pipenv run python -m pytest -m'not openssl'
 
   backend-flask-with-openssl:
+    name: backend-flask + openssl Integration Test
     strategy:
       fail-fast: false
       matrix:
@@ -236,6 +240,7 @@ jobs:
         pipenv run python -m pytest
 
   end-to-end-test-master:
+    name: End to End Integration Test
     strategy:
       fail-fast: false
       matrix:
@@ -294,6 +299,7 @@ jobs:
         curl --silent --show-error --retry-connrefused --retry 7 --location http://localhost:5000/index.html
 
   end-to-end-test-releasedbinaries:
+    name: start.sh Test with Latest Release Artifacts
     strategy:
       fail-fast: false
       matrix:
