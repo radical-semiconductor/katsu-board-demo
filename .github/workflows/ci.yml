@@ -257,6 +257,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+        cache: 'pipenv'
+        cache-dependency-path: '**/Pipfile.lock'
+
     - uses: actions/download-artifact@v2
       with:
         name: openssl-output-${{ matrix.platform }}
