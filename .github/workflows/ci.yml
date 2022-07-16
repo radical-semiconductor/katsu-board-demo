@@ -43,7 +43,7 @@ jobs:
         directory: ${{ github.workspace }}
         type: tar
 
-    - name: Archive openssl artifacts for linux
+    - name: Archive Frontend Blazor Artifacts
       uses: actions/upload-artifact@v3
       with:
         name: frontend-blazor
@@ -130,16 +130,16 @@ jobs:
     - name: Zip OpenSSL Artifacts for ${{ matrix.platform }}
       uses: TheDoctor0/zip-release@0.6.2
       with:
-        filename: openssl.${{ matrix.openssl-buildtarget }}.tar.gz
+        filename: openssl.${{ matrix.platform }}.tar.gz
         path: openssl-output
         directory: ${{ github.workspace }}
         type: tar
 
-    - name: Archive openssl artifacts for linux
+    - name: Archive openssl artifacts for ${{ matrix.platform }}
       uses: actions/upload-artifact@v3
       with:
         name: openssl-output-${{ matrix.platform }}
-        path: openssl.${{ matrix.openssl-buildtarget }}.tar.gz
+        path: openssl.${{ matrix.platform }}.tar.gz
 
   backend-flask:
     strategy:
@@ -257,20 +257,12 @@ jobs:
         name: openssl-output-${{ matrix.platform }}
         path: "${{ github.workspace }}"
 
-    - name: List downloaded artifact
-      shell: bash
-      run: ls -alR "${{ github.workspace }}"
-
     - name: Extract OpenSSL Artifacts
       uses: a7ul/tar-action@v1.1.0
       with:
         command: x
         cwd: "${{ github.workspace }}"
         files: openssl.${{ matrix.platform }}.tar.gz
-
-    - name: List extracted artifact
-      shell: bash
-      run: ls -alR "${{ github.workspace }}"
 
     - uses: actions/download-artifact@v2
       with:
@@ -283,6 +275,10 @@ jobs:
         command: x
         cwd: "${{ github.workspace }}"
         files: frontend-blazor.tar.gz
+
+    - name: List extracted artifacts
+      shell: bash
+      run: ls -alR "${{ github.workspace }}"
 
     - name: Debug out bash installation
       shell: bash
