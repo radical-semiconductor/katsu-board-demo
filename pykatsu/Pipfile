@@ -13,5 +13,5 @@ atomicwrites = {version = "*", sys_platform = "== 'win32'"}
 ipython = "*"
 
 [requires]
-python_version = "3"
+python_version = "3.10"
 
