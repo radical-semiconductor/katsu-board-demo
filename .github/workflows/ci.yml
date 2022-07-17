@@ -124,8 +124,13 @@ jobs:
       run: |
         ${{ matrix.openssl-make }} ${{ matrix.openssl-makeargs }} install_sw install_ssldirs
 
-    - name: Show OpenSSl Output Files for ${{ matrix.platform }}
+    - name: Show OpenSSl Build Files for ${{ matrix.platform }}
       working-directory: ./openssl
+      run: |
+        git status --ignored --untracked-files=all
+
+    - name: Show OpenSSl Output Files for ${{ matrix.platform }}
+      working-directory: ./openssl-output
       run: |
         git status --ignored --untracked-files=all
 
