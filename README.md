@@ -1,61 +1,39 @@
-Currently we have only linux instructions and scripts.
+# Katsu Board Demo
+## Requirements
+### Operating System
+**linux**, **OSX**, or **Windows (>=1803)**
 
-Install the .NET6 SDK using instructions provided by your linux distribution.
+For details of **Windows** versions see https://en.wikipedia.org/wiki/Windows_10_version_history
 
-To check your SDKs:
+### Python
+Please ensure **Python 3.10.X** is installed and on your `PATH`. Please follow the installation instructions reccomended by you operating system vendor. For most **linux** distributions such as **Ubuntu** this means using the system package manage e.g. `apt`, `yum`, `pacman`, etc. On **Windows** and **macOS** using the installer from https://www.python.org/downloads/ should suffice.
 
-    $ dotnet --list-sdks
-    6.0.102 [/usr/share/dotnet/sdk]
+### Bash
+Any fairly recent version of **linux** or **macOS** should include a new-enough version of `bash`.
 
-To check your runtimes:
+On Windows we have tested `bash` provided both by **Windows Subsystem for Linux** (WSL) as well as **Git Bash** aka **Git for Windows**.
 
-    $ dotnet --list-runtimes
-    Microsoft.AspNetCore.App 6.0.2 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]
-    Microsoft.NETCore.App 6.0.2 [/usr/share/dotnet/shared/Microsoft.NETCore.App]
+See:
+- https://docs.microsoft.com/en-us/windows/wsl/install
+- https://gitforwindows.org/
 
-To build the .NET (Blazor) front end and install python dependencies:
+## Running the Demo
+1. Open up a `bash` prompt and clone this repository using `git`.
 
-    ./build.sh
+       git clone XXXXXX
 
-Currently the assets for the front end are compiled from source, but this could easily be done using CI or other means to remove end user requirement of compiling the .NET code.
+1. Change directories
 
-To run the demo:
+       cd katsu-board-demo
 
-    ./start.sh
+1. Run the start script
 
-To run unit tests run:
+       ./start.sh
 
-    ./test.sh
+All python and binary runtime dependencies will be installed if missing.
 
-Then to view, access the local server display by flask:
+Once you see the following, the app will attempt to open in a browser tab. If it does not, you can manually open the displayed URL.
 
-    * Running on http://127.0.0.1:5000 (Press CTRL+C to quit)
+    Serving frontend-blazor using flask.
 
-    http://127.0.0.1:5000/
-
-# Developing on this demo itself
-To utilize live reloading upon save either:
-- Use the VS Code Task `runDevelopment`
-- Or run each in separt terminals `develop.api-service.sh` followed by `develop.frontend.sh`
-
-Otherwise you can manually rerun everything from scratch
-1. Make change
-1. Kill server with Ctrl-C
-1. Rebuild and restart with `./build.sh && ./start.sh`
-
-## Todo
-- Get a TLS echo happening in demo
-- Eliminate need for end user to have .NET SDK
-- PIPENV_VENV_IN_PROJECT - add ability to debug out python environ
-- configure vscode to also use the right linting/venv when editing
-- C# extensions for vscode configure
-- possibly add "sensor" for startup detection rather than just waiting for full startup time
-
-## Questions
-
-
-## Toolchain automation
-
-    wget https://dot.net/v1/dotnet-install.sh
-    chmod +x ./dotnet-install.sh
-    source ./dotnet-install.sh -c 6.0 -i ./dotnet
+    * Running on http://127.0.0.1:6327 (Press CTRL+C to quit)
