@@ -31,5 +31,6 @@ pushd $KATSU_PROJECT_ROOT/pykatsu
     pipenv sync
     pipenv graph
     export FLASK_APP=pykatsu.api_service.flaskapp
+    export FLASK_RUN_PORT=6327
     pipenv run python -m flask run --without-threads
 popd
