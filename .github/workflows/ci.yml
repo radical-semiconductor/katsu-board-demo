@@ -218,6 +218,10 @@ jobs:
         cwd: "${{ github.workspace }}"
         files: openssl.${{ matrix.platform }}.tar.gz
 
+    - name: List extracted artifacts
+      shell: bash
+      run: ls -alR "${{ github.workspace }}"
+
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
@@ -225,17 +229,26 @@ jobs:
         cache: 'pipenv'
         cache-dependency-path: '**/Pipfile.lock'
 
+    - name: Debug out bash installation
+      shell: bash
+      run: |
+        type -a bash
+        help
+
     - name: Install pipenv
+      shell: bash
       run: |
         pip install --user pipx
         pipx install pipenv
 
     - name: Restore Python dependecies
+      shell: bash
       run: |
         pipenv install --dev
         pipenv graph
 
     - name: Test Backend Flask
+      shell: bash
       run: |
         pipenv run python -m pytest
 
