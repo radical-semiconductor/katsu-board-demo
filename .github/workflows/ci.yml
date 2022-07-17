@@ -322,6 +322,7 @@ jobs:
         ./start.sh &
         curl --silent --show-error --retry-connrefused --retry 7 --location http://localhost:5000/api/timestamp
         curl --silent --show-error --retry-connrefused --retry 7 --location http://localhost:5000/index.html
+        curl --silent --show-error --retry-connrefused --retry 7 --location http://localhost:5000/api/keys/generate
 
   end-to-end-test-releasedbinaries:
     name: start.sh Test with Latest Release Artifacts
@@ -359,3 +360,4 @@ jobs:
         ./start.sh &
         curl --silent --show-error --retry-connrefused --retry 7 --location http://localhost:5000/api/timestamp
         curl --silent --show-error --retry-connrefused --retry 7 --location http://localhost:5000/index.html
+        curl --silent --show-error --retry-connrefused --retry 7 --location http://localhost:5000/api/keys/generate
