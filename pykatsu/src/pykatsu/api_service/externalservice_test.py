@@ -14,7 +14,7 @@ class DummyYesService(ExternalService):
 
     @property
     def expected_startup_time(self):
-        return 0.5
+        return 1.1
 
 @pytest.fixture
 def service():
@@ -29,7 +29,7 @@ class DummyUnstartableService(ExternalService):
 
     @property
     def expected_startup_time(self):
-        return 0.5
+        return 1.1
 
 @pytest.fixture
 def unstartable_service():
