@@ -72,10 +72,10 @@ jobs:
             openssl-makeargs: "-j"
           - platform: "windows"
             vm-image: "windows-latest"
-            liboqs-cmakeargs: ""
+            liboqs-cmakeargs: "-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
             openssl-buildtarget: "VC-WIN64A"
             openssl-configargs: ""
-            openssl-make: "nmake"
+            openssl-make: "cmake"
             openssl-makeargs: ""
 
     runs-on: ${{ matrix.vm-image }}
@@ -96,7 +96,6 @@ jobs:
       with:
         platform: win64
     - name: Setup build cache
-      if: ${{ matrix.platform != 'windows' }}
       uses: hendrikmuhs/ccache-action@v1.2
       with:
         key: ${{ github.job }}-${{ matrix.platform}}
