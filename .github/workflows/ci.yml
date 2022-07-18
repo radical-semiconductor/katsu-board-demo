@@ -98,7 +98,7 @@ jobs:
     - name: Setup build cache
       uses: hendrikmuhs/ccache-action@v1.2
       with:
-        key: ${{ github.job }}-${{ matrix.platform}}
+        key: sccache-${{ github.job }}-${{ matrix.platform}}
         max-size: 1G
         variant: sccache
 
