@@ -58,21 +58,21 @@ jobs:
         include:
           - platform: "linux"
             vm-image: "ubuntu-latest"
-            liboqs-cmakeargs: "-D CMAKE_C_COMPILER_LAUNCHER=ccache -D CMAKE_CXX_COMPILER_LAUNCHER=ccache"
+            liboqs-cmakeargs: "-D CMAKE_C_COMPILER_LAUNCHER=sccache -D CMAKE_CXX_COMPILER_LAUNCHER=sccache"
             openssl-buildtarget: "linux-x86_64"
             openssl-configargs: "-lm"
             openssl-make: "make"
             openssl-makeargs: "-j2"
           - platform: "macos"
             vm-image: "macos-latest"
-            liboqs-cmakeargs: "-D CMAKE_C_COMPILER_LAUNCHER=ccache -D CMAKE_CXX_COMPILER_LAUNCHER=ccache"
+            liboqs-cmakeargs: "-D CMAKE_C_COMPILER_LAUNCHER=sccache -D CMAKE_CXX_COMPILER_LAUNCHER=sccache"
             openssl-buildtarget: "darwin64-x86_64-cc"
             openssl-configargs: ""
             openssl-make: "make"
             openssl-makeargs: "-j"
           - platform: "windows"
             vm-image: "windows-latest"
-            liboqs-cmakeargs: "-DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache"
+            liboqs-cmakeargs: "-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
             openssl-buildtarget: "VC-WIN64A"
             openssl-configargs: ""
             openssl-make: "nmake"
@@ -99,6 +99,8 @@ jobs:
       uses: hendrikmuhs/ccache-action@v1.2
       with:
         key: ${{ github.job }}-${{ matrix.platform}}
+        max-size: 1G
+        variant: sccache
 
     - name: Build liboqs
       working-directory: ./liboqs
