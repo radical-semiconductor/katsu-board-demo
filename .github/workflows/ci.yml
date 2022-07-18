@@ -75,7 +75,7 @@ jobs:
             liboqs-cmakeargs: "-DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache"
             openssl-buildtarget: "VC-WIN64A"
             openssl-configargs: ""
-            openssl-make: "make"
+            openssl-make: "nmake"
             openssl-makeargs: ""
 
     runs-on: ${{ matrix.vm-image }}
