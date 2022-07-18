@@ -111,7 +111,7 @@ jobs:
     - name: Configure OpenSSl for ${{ matrix.platform }}
       working-directory: ./openssl
       run: |
-        perl Configure no-shared ${{ matrix.openssl-buildtarget }} ${{ matrix.openssl-configargs }} --prefix="${{ github.workspace }}/openssl-output"
+        perl Configure no-shared ${{ matrix.openssl-buildtarget }} ${{ matrix.openssl-configargs }} --prefix="${{ github.workspace }}/openssl-output" --openssldir="${{ github.workspace }}/openssl-output/ssl"
 
     - name: Build OpenSSl for ${{ matrix.platform }}
       working-directory: ./openssl
