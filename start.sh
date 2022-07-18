@@ -20,17 +20,17 @@ if [ ! -d "$OPENSSL_ARCHIVE_OUTPUT" ]; then
     curl --silent --show-error --location $OPENSSL_ARCHIVE | tar zx
 fi
 
-if command -v pipenv >/dev/null 2>&1 ; then
-    echo "pipenv already installed"
+if command -v pipx >/dev/null 2>&1 ; then
+    echo "pipx already installed"
 else
-    pip install --user pipx
-    pipx install pipenv
+    pip install -q --user pipx
+    python -m pipx ensurepath
 fi
 
 pushd $KATSU_PROJECT_ROOT/pykatsu
-    pipenv sync
-    pipenv graph
+    python -m pipx run pipenv sync
+    python -m pipx run pipenv graph
     export FLASK_APP=pykatsu.api_service.flaskapp
     export FLASK_RUN_PORT=6327
-    pipenv run python -m flask run --without-threads
+    python -m pipx run pipenv run python -m flask run --without-threads --no-reload --no-debugger
 popd
