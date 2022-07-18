@@ -72,7 +72,7 @@ jobs:
             openssl-makeargs: "-j"
           - platform: "windows"
             vm-image: "windows-latest"
-            liboqs-cmakeargs: "-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
+            liboqs-cmakeargs: "-DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache"
             openssl-buildtarget: "VC-WIN64A"
             openssl-configargs: ""
             openssl-make: "cmake"
