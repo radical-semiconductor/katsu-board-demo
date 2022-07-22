@@ -20,11 +20,8 @@ if [ ! -d "$OPENSSL_ARCHIVE_OUTPUT" ]; then
     curl --silent --show-error --location $OPENSSL_ARCHIVE | tar zx
 fi
 
-if command -v pipx >/dev/null 2>&1 ; then
-    echo "pipx already installed"
-else
-    pip install -q --user pipx
-    python -m pipx ensurepath
+if ! python -m pipx -h  >/dev/null 2>&1; then
+    python -m pip install -q --user pipx
 fi
 
 pushd $KATSU_PROJECT_ROOT/pykatsu
