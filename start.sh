@@ -4,8 +4,16 @@ set -e
 export KATSU_PROJECT_ROOT=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 export MSYS=winsymlinks:native # required for windows, via Git Bash
 
+case "$OSTYPE" in
+  darwin*)  export KATSU_PLATFORM=macos ;;
+  linux*)   export KATSU_PLATFORM=linux ;;
+  msys*)    export KATSU_PLATFORM=windows ;;
+  cygwin*)  export KATSU_PLATFORM=windows ;;
+  *)        echo "Platform unsupported: $OSTYPE" && exit 1 ;;
+esac
+
 # Get prebuilt frontend-blazor
-FRONTEND_ARCHIVE='http://github.com/radical-semiconductor/katsu-board-demo/releases/latest/download/frontend-blazor.tar.gz'
+FRONTEND_ARCHIVE="http://github.com/radical-semiconductor/katsu-board-demo/releases/latest/download/frontend-blazor.tar.gz"
 FRONTEND_ARCHIVE_OUTPUT=frontend-blazor-output
 if [ ! -d "$FRONTEND_ARCHIVE_OUTPUT" ]; then
     echo Fetching latest release of Frontend Blazor from Radical Semiconductor
@@ -13,7 +21,7 @@ if [ ! -d "$FRONTEND_ARCHIVE_OUTPUT" ]; then
 fi
 
 # Get prebuilt openssl
-OPENSSL_ARCHIVE='http://github.com/radical-semiconductor/katsu-board-demo/releases/latest/download/openssl.linux.tar.gz'
+OPENSSL_ARCHIVE="http://github.com/radical-semiconductor/katsu-board-demo/releases/latest/download/openssl.$KATSU_PLATFORM.tar.gz"
 OPENSSL_ARCHIVE_OUTPUT=openssl-output
 if [ ! -d "$OPENSSL_ARCHIVE_OUTPUT" ]; then
     echo Fetching latest release of OpenSSL from Radical Semiconductor
